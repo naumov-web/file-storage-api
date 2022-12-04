@@ -1,0 +1,66 @@
+version: '2'
+
+networks:
+  default-network:
+    driver: bridge
+
+services:
+
+  nginx:
+    build:
+      context: .
+      dockerfile: deployment/local/docker/nginx/Dockerfile
+    ports:
+      - "31080:80"
+    volumes:
+      - ./:/var/www
+    networks:
+      - default-network
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: deployment/local/docker/php-fpm/Dockerfile
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - mysql_leader
+      - redis
+    container_name: private_file_storage_backend_php_fpm
+    networks:
+      - default-network
+
+  mysql_leader:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./deployment/local/mysql_leader/mysql.cnf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+      - ./persistent_data/mysql_leader:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=files
+    networks:
+      - default-network
+    container_name: mysql_leader
+
+  redis:
+    image: redis:4.0
+    ports:
+      - "6379:6379"
+    networks:
+      - default-network
+    container_name: redis
+
+  phpmyadmin:
+    depends_on:
+      - mysql_leader
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: mysql_leader
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - default-network
