@@ -11,6 +11,11 @@ use App\Models\Role\DTO\RoleDTO;
  */
 final class RoleDTOComposer extends BaseDTOComposer
 {
+    /**
+     * Get DTO class name
+     *
+     * @return string
+     */
     function getDTOClass(): string
     {
         return RoleDTO::class;
