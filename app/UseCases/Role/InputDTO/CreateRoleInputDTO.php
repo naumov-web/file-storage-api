@@ -14,11 +14,11 @@ final class CreateRoleInputDTO extends BaseUseCaseDTO
      * Role name value
      * @var string
      */
-    public $name;
+    public string $name;
 
     /**
      * Role system name value
      * @var string|null
      */
-    public $systemName = null;
+    public string|null $systemName = null;
 }

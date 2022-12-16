@@ -2,7 +2,6 @@
 
 namespace App\Models\Role\Repositories;
 
-use App\Models\Role\Composers\RoleDTOComposer;
 use App\Models\Role\Contracts\IRoleCacheRepository;
 use App\Models\Role\Contracts\IRoleRepository;
 use Illuminate\Support\Collection;
@@ -15,18 +14,11 @@ use Illuminate\Support\Facades\Cache;
 final class CacheRepository implements IRoleCacheRepository
 {
     /**
-     * Database role repository instance
-     * @var IRoleRepository
-     */
-    protected $databaseRepository;
-
-    /**
      * CacheRepository constructor
      * @param IRoleRepository $databaseRepository
      */
-    public function __construct(IRoleRepository $databaseRepository)
+    public function __construct(private IRoleRepository $databaseRepository)
     {
-        $this->databaseRepository = $databaseRepository;
     }
 
     /**

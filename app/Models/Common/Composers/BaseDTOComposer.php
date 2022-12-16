@@ -2,6 +2,7 @@
 
 namespace App\Models\Common\Composers;
 
+use App\Models\BaseDBModel;
 use App\Models\Common\DTO\ModelDTO;
 use Illuminate\Support\Collection;
 
@@ -40,5 +41,23 @@ abstract class BaseDTOComposer
         }
 
         return collect($result);
+    }
+
+    /**
+     * Get DTO instance from model
+     *
+     * @param BaseDBModel $model
+     * @return ModelDTO
+     */
+    public function getFromModel(BaseDBModel $model): ModelDTO
+    {
+        $className = $this->getDTOClass();
+        /**
+         * @var ModelDTO $result
+         */
+        $result = new $className();
+        $result->fillFromModel($model);
+
+        return $result;
     }
 }
