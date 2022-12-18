@@ -13,4 +13,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const CREATE_ROLE = 'create_role';
+
+    /**
+     * Use case "Create user"
+     * @var string
+     */
+    public const CREATE_USER = 'create_user';
 }

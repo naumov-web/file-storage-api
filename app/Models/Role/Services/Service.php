@@ -49,7 +49,6 @@ final class Service implements IRoleService
         }
 
         $this->databaseRepository->create($dto);
-
         $this->cacheRepository->resetAllRolesCache();
     }
 }
