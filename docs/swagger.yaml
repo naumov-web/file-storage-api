@@ -1,73 +1,156 @@
 swagger: "2.0"
 info:
-  title: "File storage API"
-  description: "Docs for file storage API"
-  version: "1.0.0"
+  title: File storage API
+  description: Docs for file storage API
+  version: 1.0.0
 schemes:
-  - "http"
+  - http
 host: 127.0.0.1:31080
 basePath: /api
+
+securityDefinitions:
+  JWT:
+    type: apiKey
+    in: header
+    name: Authorization
 
 paths:
 
   /v1/auth:
     post:
       tags:
-        - "auth"
-      summary: "Authorize user"
-      description: ""
+        - auth
+      summary: Authorize user
+      description: Authorize user via email and password
       produces:
-        - "application/json"
+        - application/json
       consumes:
-        - "application/json"
+        - application/json
       parameters:
-        - name: "LoginRequestBody"
-          in: "body"
-          description: "Login user request body"
+        - in: header
+          type: string
+          name: X-Locale
+          enum:
+            - ru
+            - en
+        - name: LoginRequestBody
+          in: body
+          description: Login user request body
           required: true
           schema:
             $ref: "#/definitions/LoginRequestModel"
       responses:
         200:
-          description: "Successful operation"
+          description: Successful operation
           schema:
             $ref: "#/definitions/LoginSuccessResponseModel"
         403:
-          description: "Forbidden"
+          description: Forbidden
           schema:
             $ref: "#/definitions/ForbiddenResponseModel"
+
+  /v1/account/user:
+    get:
+      tags:
+        - user
+      summary: Get current user info
+      description: Get info about user via authorization header
+      security:
+        - JWT: []
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          type: string
+          name: X-Locale
+          enum:
+            - ru
+            - en
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/GetUserResponseModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedResponseModel"
 
 definitions:
 
   # Login models
 
   LoginRequestModel:
-    type: "object"
+    type: object
     required:
       - email
       - password
     properties:
       email:
-        type: "string"
+        type: string
       password:
-        type: "string"
+        type: string
 
   LoginSuccessResponseModel:
-    type: "object"
+    type: object
     properties:
       success:
-        type: "boolean"
+        type: boolean
       message:
-        type: "string"
+        type: string
       token:
-        type: "string"
+        type: string
+
+  # Get user model
+
+  GetUserResponseModel:
+    type: object
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
+      user:
+        $ref: "#/definitions/UserResponseModel"
 
   # Common models
 
-  ForbiddenResponseModel:
-    type: "object"
+  UnauthorizedResponseModel:
+    type: object
     properties:
       success:
-        type: "boolean"
+        type: boolean
       message:
-        type: "string"
+        type: string
+
+  ForbiddenResponseModel:
+    type: object
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
+
+  UserResponseModel:
+    type: object
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+      name:
+        type: string
+
+  RoleResponseModel:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      system_name:
+        type: string
