@@ -2,8 +2,9 @@
 
 namespace App\Models\User;
 
-use App\Models\BaseDBModel;
+use Illuminate\Foundation\Auth\User as Authentication;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 /**
  * Class Model
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $name
  * @property string|null $confirmation_code
  */
-final class Model extends BaseDBModel
+final class Model extends Authentication implements JWTSubject
 {
     /**
      * Table name for model
@@ -36,5 +37,25 @@ final class Model extends BaseDBModel
             'user_id',
             'role_id'
         );
+    }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
