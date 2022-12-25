@@ -25,6 +25,15 @@ final class Model extends Authentication implements JWTSubject
     protected $table = 'users';
 
     /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+    ];
+
+    /**
      * User roles relation
      *
      * @return BelongsToMany

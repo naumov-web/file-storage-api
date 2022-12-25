@@ -30,6 +30,7 @@ final class CreateUserUseCaseTest extends BaseUseCaseTest
             'system_name' => 'user'
         ]
     ];
+
     /**
      * Test case, when we try to create user, but other user with this email already exists
      *
