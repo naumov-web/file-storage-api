@@ -1,0 +1,73 @@
+swagger: "2.0"
+info:
+  title: "File storage API"
+  description: "Docs for file storage API"
+  version: "1.0.0"
+schemes:
+  - "http"
+host: 127.0.0.1:31080
+basePath: /api
+
+paths:
+
+  /v1/auth:
+    post:
+      tags:
+        - "auth"
+      summary: "Authorize user"
+      description: ""
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "LoginRequestBody"
+          in: "body"
+          description: "Login user request body"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginRequestModel"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/LoginSuccessResponseModel"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ForbiddenResponseModel"
+
+definitions:
+
+  # Login models
+
+  LoginRequestModel:
+    type: "object"
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+
+  LoginSuccessResponseModel:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      message:
+        type: "string"
+      token:
+        type: "string"
+
+  # Common models
+
+  ForbiddenResponseModel:
+    type: "object"
+    properties:
+      success:
+        type: "boolean"
+      message:
+        type: "string"

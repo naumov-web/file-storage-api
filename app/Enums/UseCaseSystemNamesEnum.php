@@ -19,4 +19,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const CREATE_USER = 'create_user';
+
+    /**
+     * Use case "Authorize user"
+     * @var string
+     */
+    public const AUTHORIZE_USER = 'authorize_user';
 }

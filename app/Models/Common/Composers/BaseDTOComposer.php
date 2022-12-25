@@ -4,6 +4,7 @@ namespace App\Models\Common\Composers;
 
 use App\Models\BaseDBModel;
 use App\Models\Common\DTO\ModelDTO;
+use Illuminate\Foundation\Auth\User as Authentication;
 use Illuminate\Support\Collection;
 
 /**
@@ -46,10 +47,10 @@ abstract class BaseDTOComposer
     /**
      * Get DTO instance from model
      *
-     * @param BaseDBModel $model
+     * @param BaseDBModel|Authentication $model
      * @return ModelDTO
      */
-    public function getFromModel(BaseDBModel $model): ModelDTO
+    public function getFromModel(BaseDBModel|Authentication $model): ModelDTO
     {
         $className = $this->getDTOClass();
         /**

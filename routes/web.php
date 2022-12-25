@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +11,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('/docs')
+    ->namespace('App\Http\Controllers\Web')
+    ->group(function () {
+        Route::get('/', 'DocsController@form');
+        Route::get('/swagger-file', 'DocsController@swaggerFile');
+    });

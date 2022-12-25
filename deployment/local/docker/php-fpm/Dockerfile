@@ -22,4 +22,4 @@ COPY . /var/www
 
 WORKDIR /var/www
 
-CMD composer install --working-dir=/var/www && php artisan key:generate && php-fpm
+CMD composer install --working-dir=/var/www && php artisan key:generate && php artisan jwt:secret && php-fpm
