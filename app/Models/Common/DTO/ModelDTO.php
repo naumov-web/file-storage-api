@@ -36,8 +36,13 @@ abstract class ModelDTO
     public function fillFromModel(Model $model): void
     {
         $fields = $this->getFields();
+        $exceptAutoFields = $this->exceptAutoFields ?? [];
 
         foreach ($fields as $field) {
+            if (in_array($field, $exceptAutoFields)) {
+                continue;
+            }
+
             if (isset($model->{$field})) {
                 $this->{$field} = $model->{$field};
             }

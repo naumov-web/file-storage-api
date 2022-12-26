@@ -144,6 +144,10 @@ definitions:
         type: string
       name:
         type: string
+      roles:
+        type: array
+        items:
+          $ref: "#/definitions/RoleResponseModel"
 
   RoleResponseModel:
     type: object
@@ -152,5 +156,5 @@ definitions:
         type: integer
       name:
         type: string
-      system_name:
+      systemName:
         type: string
