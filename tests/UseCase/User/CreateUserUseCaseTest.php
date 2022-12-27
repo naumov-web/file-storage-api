@@ -17,21 +17,6 @@ use Tests\UseCase\BaseUseCaseTest;
 final class CreateUserUseCaseTest extends BaseUseCaseTest
 {
     /**
-     * Roles data list
-     * @var array
-     */
-    protected $rolesData = [
-        [
-            'name' => 'Admin',
-            'system_name' => 'admin'
-        ],
-        [
-            'name' => 'User',
-            'system_name' => 'user'
-        ]
-    ];
-
-    /**
      * Test case, when we try to create user, but other user with this email already exists
      *
      * @return void
@@ -119,15 +104,5 @@ final class CreateUserUseCaseTest extends BaseUseCaseTest
         }
     }
 
-    /**
-     * Create roles
-     *
-     * @return void
-     */
-    private function createRoles(): void
-    {
-        foreach ($this->rolesData as $roleData) {
-            \App\Models\Role\Model::query()->create($roleData);
-        }
-    }
+
 }

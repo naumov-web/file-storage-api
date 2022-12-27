@@ -18,21 +18,6 @@ use Tests\UseCase\BaseUseCaseTest;
 final class AuthorizeUserUseCaseTest extends BaseUseCaseTest
 {
     /**
-     * Roles data list
-     * @var array
-     */
-    protected $rolesData = [
-        [
-            'name' => 'Admin',
-            'system_name' => 'admin'
-        ],
-        [
-            'name' => 'User',
-            'system_name' => 'user'
-        ]
-    ];
-
-    /**
      * Test case, when we use incorrect email or password
      *
      * @test
@@ -93,17 +78,5 @@ final class AuthorizeUserUseCaseTest extends BaseUseCaseTest
         $authorizeUserUseCase->execute();
 
         $this->assertNotNull($authorizeUserUseCase->getToken());
-    }
-
-    /**
-     * Create roles
-     *
-     * @return void
-     */
-    private function createRoles(): void
-    {
-        foreach ($this->rolesData as $roleData) {
-            \App\Models\Role\Model::query()->create($roleData);
-        }
     }
 }
