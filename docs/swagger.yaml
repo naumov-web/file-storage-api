@@ -48,6 +48,10 @@ paths:
           description: Forbidden
           schema:
             $ref: "#/definitions/ForbiddenResponseModel"
+        422:
+          description: Validation failed
+          schema:
+            $ref: "#/definitions/ValidationFailedResponseModel"
 
   /v1/account/user:
     get:
@@ -79,6 +83,47 @@ paths:
           description: Unauthorized
           schema:
             $ref: "#/definitions/UnauthorizedResponseModel"
+    put:
+      tags:
+        - user
+      summary: Update current user info
+      description: Update current user info partialy
+      security:
+        - JWT: [ ]
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          type: string
+          name: X-Locale
+          enum:
+            - ru
+            - en
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+        - name: UpdateUserRequestBody
+          in: body
+          description: Update user request body
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateUserRequestModel"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/SimpleSuccessResponseModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedResponseModel"
+        422:
+          description: Validation failed
+          schema:
+            $ref: "#/definitions/ValidationFailedResponseModel"
 
 definitions:
 
@@ -117,7 +162,27 @@ definitions:
       user:
         $ref: "#/definitions/UserResponseModel"
 
+  # Update user model
+
+  UpdateUserRequestModel:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+
   # Common models
+
+  SimpleSuccessResponseModel:
+    type: object
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
 
   UnauthorizedResponseModel:
     type: object
@@ -134,6 +199,12 @@ definitions:
         type: boolean
       message:
         type: string
+
+  ValidationFailedResponseModel:
+    type: object
+    properties:
+      errors:
+        type: object
 
   UserResponseModel:
     type: object
