@@ -10,33 +10,43 @@ use App\Models\Common\DTO\ModelDTO;
  */
 final class UserDTO extends ModelDTO
 {
+    protected $exceptAutoFields = [
+        'roles'
+    ];
+
     /**
      * User id value
      * @var int
      */
-    public $id;
+    public int $id;
 
     /**
      * User email value
      * @var string
      */
-    public $email;
+    public string $email;
 
     /**
      * User password value
      * @var string|null
      */
-    public $password;
+    public string|null $password;
 
     /**
      * User name value
      * @var string
      */
-    public $name;
+    public string $name;
 
     /**
      * User confirmation code value
      * @var string|null
      */
-    public $confirmation_code;
+    public string|null $confirmation_code = null;
+
+    /**
+     * Roles list
+     * @var array
+     */
+    public array $roles;
 }

@@ -16,6 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')
     ->namespace('App\Http\Controllers\Api\V1')
-    ->group(function () {
+    ->group(function() {
         Route::post('/auth', 'AuthController@login');
+
+        Route::middleware(['auth.jwt'])->group(function() {
+            Route::prefix('/account')
+                ->namespace('Account')
+                ->group(function () {
+                    Route::get('/user', 'UserController@getCurrent');
+                });
+        });
     });

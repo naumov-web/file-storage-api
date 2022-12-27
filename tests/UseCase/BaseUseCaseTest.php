@@ -2,6 +2,7 @@
 
 namespace Tests\UseCase;
 
+use App\Models\Role\Model;
 use App\UseCases\UseCaseFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,7 +15,26 @@ abstract class BaseUseCaseTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Use case factory instance
+     * @var UseCaseFactory
+     */
     protected UseCaseFactory $useCaseFactory;
+
+    /**
+     * Roles data list
+     * @var array
+     */
+    protected array $rolesData = [
+        [
+            'name' => 'Admin',
+            'system_name' => 'admin'
+        ],
+        [
+            'name' => 'User',
+            'system_name' => 'user'
+        ]
+    ];
 
     /**
      * Prepare before testing
@@ -26,5 +46,17 @@ abstract class BaseUseCaseTest extends TestCase
         parent::setUp();
 
         $this->useCaseFactory = new UseCaseFactory();
+    }
+
+    /**
+     * Create roles
+     *
+     * @return void
+     */
+    protected function createRoles(): void
+    {
+        foreach ($this->rolesData as $roleData) {
+            Model::query()->create($roleData);
+        }
     }
 }
