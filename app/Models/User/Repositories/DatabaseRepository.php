@@ -91,4 +91,23 @@ final class DatabaseRepository extends BaseDatabaseRepository implements IUserDa
 
         $user->roles()->sync($roleIds);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateUser(int $userId, UserDTO $dto): UserDTO
+    {
+        $model = Model::query()->find($userId);
+        $newData = [
+            'name' => $dto->name
+        ];
+
+        if ($dto->password) {
+            $newData['password'] = $dto->password;
+        }
+
+        $model->update($newData);
+
+        return $dto;
+    }
 }

@@ -5,6 +5,7 @@ use App\UseCases\Role\CreateRoleUseCase;
 use App\UseCases\User\AuthorizeUserUseCase;
 use App\UseCases\User\CreateUserUseCase;
 use App\UseCases\User\GetUserUseCase;
+use App\UseCases\User\UpdateUserUseCase;
 
 return [
     'mapping' => [
@@ -12,5 +13,6 @@ return [
         UseCaseSystemNamesEnum::CREATE_USER => CreateUserUseCase::class,
         UseCaseSystemNamesEnum::AUTHORIZE_USER => AuthorizeUserUseCase::class,
         UseCaseSystemNamesEnum::GET_USER => GetUserUseCase::class,
+        UseCaseSystemNamesEnum::UPDATE_USER => UpdateUserUseCase::class
     ]
 ];

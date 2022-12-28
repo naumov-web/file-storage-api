@@ -59,4 +59,19 @@ final class Service implements IUserService
             $roleIds
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateUser(UserDTO $dto): void
+    {
+        if ($dto->password) {
+            $dto->password = Hash::make($dto->password);
+        }
+
+        $this->databaseRepository->updateUser(
+            $dto->id,
+            $dto
+        );
+    }
 }

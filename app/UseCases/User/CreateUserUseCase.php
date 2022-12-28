@@ -18,6 +18,7 @@ final class CreateUserUseCase extends BaseUseCase
     /**
      * CreateUserUseCase constructor
      * @param IUserService $service
+     * @param IRoleCacheRepository $roleRepository
      */
     public function __construct(private IUserService $service, private IRoleCacheRepository $roleRepository)
     {
