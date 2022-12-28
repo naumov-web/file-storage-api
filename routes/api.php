@@ -24,6 +24,7 @@ Route::prefix('/v1')
                 ->namespace('Account')
                 ->group(function () {
                     Route::get('/user', 'UserController@getCurrent');
+                    Route::put('/user', 'UserController@updateCurrent');
                 });
         });
     });

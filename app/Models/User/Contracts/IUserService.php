@@ -27,4 +27,12 @@ interface IUserService
      * @return void
      */
     public function syncUserRoles(UserDTO $dto, array $roleIds): void;
+
+    /**
+     * Update user instance
+     *
+     * @param UserDTO $dto
+     * @return void
+     */
+    public function updateUser(UserDTO $dto): void;
 }

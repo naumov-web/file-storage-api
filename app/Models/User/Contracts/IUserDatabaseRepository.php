@@ -26,4 +26,13 @@ interface IUserDatabaseRepository extends IUserRepository
      * @return void
      */
     public function syncUserRoles(UserDTO $dto, array $roleIds): void;
+
+    /**
+     * Update specific user instance
+     *
+     * @param int $userId
+     * @param UserDTO $dto
+     * @return UserDTO
+     */
+    public function updateUser(int $userId, UserDTO $dto): UserDTO;
 }

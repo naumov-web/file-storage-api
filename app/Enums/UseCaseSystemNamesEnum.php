@@ -31,4 +31,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const GET_USER = 'get_user';
+
+    /**
+     * Use case "Update user"
+     * @var string
+     */
+    public const UPDATE_USER = 'update_user';
 }
