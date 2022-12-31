@@ -49,7 +49,7 @@ final class DatabaseRepository implements IInvitationDatabaseRepository
     public function getInvitations(): Collection
     {
         $models = Model::query()
-            ->where('status_id', StatusesEnum::WAIT)
+            ->whereIn('status_id', [StatusesEnum::WAIT, StatusesEnum::ACCEPTED])
             ->get();
 
         return $this->composer->getFromCollection($models);

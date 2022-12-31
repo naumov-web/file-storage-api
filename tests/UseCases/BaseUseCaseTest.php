@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests\UseCase;
+namespace Tests\UseCases;
 
 use App\Models\Role\Model;
 use App\UseCases\UseCaseFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 /**
@@ -44,7 +45,7 @@ abstract class BaseUseCaseTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        Queue::fake();
         $this->useCaseFactory = new UseCaseFactory();
     }
 

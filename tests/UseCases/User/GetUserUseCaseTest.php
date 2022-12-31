@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\UseCase\User;
+namespace Tests\UseCases\User;
 
 use App\Enums\UseCaseSystemNamesEnum;
 use App\Models\Role\DTO\RoleDTO;
@@ -10,7 +10,7 @@ use App\UseCases\User\GetUserUseCase;
 use App\UseCases\User\InputDTO\CreateUserInputDTO;
 use App\UseCases\User\InputDTO\GetUserInputDTO;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Tests\UseCase\BaseUseCaseTest;
+use Tests\UseCases\BaseUseCaseTest;
 
 /**
  * Class GetUserUseCaseTest
