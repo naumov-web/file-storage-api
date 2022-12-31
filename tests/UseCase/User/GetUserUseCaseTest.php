@@ -85,7 +85,7 @@ final class GetUserUseCaseTest extends BaseUseCaseTest
              */
             $this->assertTrue(
                 in_array(
-                    $role->system_name,
+                    $role->systemName,
                     $roleSystemNames
                 )
             );

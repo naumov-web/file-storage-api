@@ -76,7 +76,7 @@ final class CreateUserUseCase extends BaseUseCase
             /**
              * @var RoleDTO $role
              */
-            if (in_array($role->system_name, $systemNames)) {
+            if (in_array($role->systemName, $systemNames)) {
                 $userRoleIds[] = $role->id;
             }
         }

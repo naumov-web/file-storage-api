@@ -22,7 +22,7 @@ final class RoleResource extends BaseApiResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'systemName' => $this->system_name,
+            'systemName' => $this->systemName,
         ];
     }
 }

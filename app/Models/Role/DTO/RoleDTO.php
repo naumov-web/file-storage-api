@@ -14,17 +14,17 @@ final class RoleDTO extends ModelDTO
      * Role id value
      * @var int
      */
-    public $id;
+    public int $id;
 
     /**
      * Role name value
      * @var string
      */
-    public $name;
+    public string $name;
 
     /**
      * Role system name value
-     * @var string
+     * @var string|null
      */
-    public $system_name;
+    public string|null $systemName = null;
 }

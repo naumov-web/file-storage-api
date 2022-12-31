@@ -37,4 +37,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const UPDATE_USER = 'update_user';
+
+    /**
+     * Use case "Create invitation"
+     * @var string
+     */
+    public const CREATE_INVITATION = 'create_invitation';
 }

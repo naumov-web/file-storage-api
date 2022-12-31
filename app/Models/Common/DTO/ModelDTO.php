@@ -11,6 +11,28 @@ use Illuminate\Database\Eloquent\Model;
 abstract class ModelDTO
 {
     /**
+     * Convert snake to camel case
+     *
+     * @param string $input
+     * @return string
+     */
+    protected function snakeToCamel(string $input): string
+    {
+        return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $input))));
+    }
+
+    /**
+     * Convert camel to snake case
+     *
+     * @param string $input
+     * @return string
+     */
+    protected function camelToSnake(string $input): string
+    {
+        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $input));
+    }
+
+    /**
      * Get fields list
      *
      * @return array
@@ -43,8 +65,10 @@ abstract class ModelDTO
                 continue;
             }
 
-            if (isset($model->{$field})) {
-                $this->{$field} = $model->{$field};
+            $modelFieldName = $this->camelToSnake($field);
+
+            if (isset($model->{$modelFieldName})) {
+                $this->{$field} = $model->{$modelFieldName};
             }
         }
     }

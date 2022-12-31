@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Invitation\Contacts\IInvitationService;
 use App\Models\Role\Contracts\IRoleCacheRepository;
 use App\Models\Role\Contracts\IRoleDatabaseRepository;
 use App\Models\Role\Contracts\IRoleRepository;
@@ -14,6 +15,7 @@ use App\Models\User\Contracts\IUserDatabaseRepository;
 use App\Models\User\Contracts\IUserRepository;
 use App\Models\User\Contracts\IUserService;
 use App\Models\User;
+use App\Models\Invitation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,6 +37,20 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(IUserDatabaseRepository::class, User\Repositories\DatabaseRepository::class);
         $this->app->bind(IUserRepository::class, User\Repositories\DatabaseRepository::class);
         $this->app->bind(IUserService::class, User\Services\Service::class);
+        // Invitation
+        $this->app->bind(
+            Invitation\Contacts\IInvitationCacheRepository::class,
+            Invitation\Repositories\CacheRepository::class
+        );
+        $this->app->bind(
+            Invitation\Contacts\IInvitationDatabaseRepository::class,
+            Invitation\Repositories\DatabaseRepository::class
+        );
+        $this->app->bind(
+            Invitation\Contacts\IInvitationRepository::class,
+            Invitation\Repositories\DatabaseRepository::class
+        );
+        $this->app->bind(IInvitationService::class, Invitation\Services\Service::class);
     }
 
     /**

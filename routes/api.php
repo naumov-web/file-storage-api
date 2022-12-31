@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')
     ->namespace('App\Http\Controllers\Api\V1')
+    ->name('api.v1.')
     ->group(function() {
         Route::post('/auth', 'AuthController@login');
 
@@ -26,5 +27,14 @@ Route::prefix('/v1')
                     Route::get('/user', 'UserController@getCurrent');
                     Route::put('/user', 'UserController@updateCurrent');
                 });
+
+            Route::prefix('/admin')
+                ->namespace('Admin')
+                ->group(function () {
+                    Route::post('/invitations', 'InvitationsController@create');
+                });
         });
+
+        Route::get('/invitations/confirm', 'InvitationController@confirm')
+            ->name('invitations.confirm');
     });

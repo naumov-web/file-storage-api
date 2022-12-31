@@ -6,5 +6,6 @@ return [
     'user_successfully_authorized' => 'User successfully authorized!',
     'incorrect_email_or_password' => 'Incorrect email or password!',
     'user_successfully_loaded' => 'User successfully loaded!',
-    'user_successfully_updated' => 'User successfully updated!'
+    'user_successfully_updated' => 'User successfully updated!',
+    'invitation_successfully_created' => 'Invitation successfully created!'
 ];

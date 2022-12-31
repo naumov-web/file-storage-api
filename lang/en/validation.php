@@ -140,6 +140,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'datetime_cannot_be_past' => 'Datetime cannot to be past',
 
     /*
     |--------------------------------------------------------------------------

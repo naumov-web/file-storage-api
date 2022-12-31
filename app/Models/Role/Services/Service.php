@@ -43,7 +43,7 @@ final class Service implements IRoleService
                 throw new RoleWithNameAlreadyExistsException();
             }
 
-            if ($dto->system_name && $dto->system_name === $role->system_name) {
+            if ($dto->systemName && $dto->systemName === $role->systemName) {
                 throw new RoleWithSystemNameAlreadyExistsException();
             }
         }

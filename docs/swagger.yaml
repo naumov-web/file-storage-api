@@ -231,6 +231,10 @@ definitions:
     properties:
       email:
         type: string
+      password:
+        type: string
+      name:
+        type: string
       expiredAt:
         type: string
 
