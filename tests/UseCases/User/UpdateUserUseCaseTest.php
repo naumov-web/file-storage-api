@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\UseCase\User;
+namespace Tests\UseCases\User;
 
 use App\Enums\UseCaseSystemNamesEnum;
 use App\Models\User\Model;
@@ -11,7 +11,7 @@ use App\UseCases\User\InputDTO\CreateUserInputDTO;
 use App\UseCases\User\InputDTO\UpdateUserInputDTO;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Tests\UseCase\BaseUseCaseTest;
+use Tests\UseCases\BaseUseCaseTest;
 
 /**
  * Class UpdateUserUseCaseTest

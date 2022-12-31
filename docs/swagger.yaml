@@ -125,6 +125,53 @@ paths:
           schema:
             $ref: "#/definitions/ValidationFailedResponseModel"
 
+  /v1/admin/invitations:
+    post:
+      tags:
+        - invitation
+      summary: Create invitation for user
+      description: Create invitation for user via email
+      security:
+        - JWT: [ ]
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          type: string
+          name: X-Locale
+          enum:
+            - ru
+            - en
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+        - name: InviteUserRequestBody
+          in: body
+          description: Invite user request body
+          required: true
+          schema:
+            $ref: "#/definitions/InviteUserRequestModel"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/SimpleSuccessResponseModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedResponseModel"
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ForbiddenResponseModel"
+        422:
+          description: Validation failed
+          schema:
+            $ref: "#/definitions/ValidationFailedResponseModel"
+
 definitions:
 
   # Login models
@@ -172,6 +219,23 @@ definitions:
       name:
         type: string
       password:
+        type: string
+
+  # Admin / Invite user model
+
+  InviteUserRequestModel:
+    type: object
+    required:
+      - email
+      - expiredAt
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      name:
+        type: string
+      expiredAt:
         type: string
 
   # Common models

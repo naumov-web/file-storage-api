@@ -5,8 +5,11 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="UseCase">
-            <directory suffix="Test.php">./tests/UseCase</directory>
+        <testsuite name="UseCases">
+            <directory suffix="Test.php">./tests/UseCases</directory>
+        </testsuite>
+        <testsuite name="ValidationRules">
+            <directory suffix="Test.php">./tests/ValidationRules</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">

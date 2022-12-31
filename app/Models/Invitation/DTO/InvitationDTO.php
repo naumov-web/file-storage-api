@@ -1,23 +1,15 @@
 <?php
 
-namespace App\Models\User\DTO;
+namespace App\Models\Invitation\DTO;
 
 use App\Models\Common\DTO\ModelDTO;
 
 /**
- * Class UserDTO
- * @package App\Models\User\DTO
+ * Class InvitationDTO
+ * @package App\Models\Invitation\DTO
  */
-final class UserDTO extends ModelDTO
+final class InvitationDTO extends ModelDTO
 {
-    /**
-     * Except auto fields list
-     * @var array
-     */
-    protected array $exceptAutoFields = [
-        'roles'
-    ];
-
     /**
      * User id value
      * @var int
@@ -43,14 +35,20 @@ final class UserDTO extends ModelDTO
     public string $name;
 
     /**
-     * User confirmation code value
-     * @var string|null
+     * Invitation code value
+     * @var string
      */
-    public string|null $confirmation_code = null;
+    public string $invitationCode;
 
     /**
-     * Roles list
-     * @var array
+     * Status id value
+     * @var int
      */
-    public array $roles;
+    public int $statusId;
+
+    /**
+     * Expired at value
+     * @var string
+     */
+    public string $expiredAt;
 }

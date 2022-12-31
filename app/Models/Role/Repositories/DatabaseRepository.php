@@ -5,7 +5,6 @@ namespace App\Models\Role\Repositories;
 use App\Models\Common\Repositories\BaseDatabaseRepository;
 use App\Models\Role\Composers\RoleDTOComposer;
 use App\Models\Role\Contracts\IRoleDatabaseRepository;
-use App\Models\Role\Contracts\IRoleRepository;
 use App\Models\Role\DTO\RoleDTO;
 use App\Models\Role\Model;
 use Illuminate\Support\Collection;
@@ -17,19 +16,10 @@ use Illuminate\Support\Collection;
 final class DatabaseRepository extends BaseDatabaseRepository implements IRoleDatabaseRepository
 {
     /**
-     * Role InputDTO composer instance
-     * @var RoleDTOComposer
-     */
-    protected $dtoComposer;
-
-    /**
      * DatabaseRepository constructor
      * @param RoleDTOComposer $dtoComposer
      */
-    public function __construct(RoleDTOComposer $dtoComposer)
-    {
-        $this->dtoComposer = $dtoComposer;
-    }
+    public function __construct(private RoleDTOComposer $dtoComposer) {}
 
     /**
      * @inheritDoc
@@ -59,7 +49,7 @@ final class DatabaseRepository extends BaseDatabaseRepository implements IRoleDa
         $query = $this->getQuery();
         $model = $query->create([
             'name' => $dto->name,
-            'system_name' => $dto->system_name
+            'system_name' => $dto->systemName
         ]);
 
         $dto->id = $model->id;

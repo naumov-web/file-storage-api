@@ -36,7 +36,7 @@ final class CreateRoleUseCase extends BaseUseCase
     {
         $roleDto = new RoleDTO();
         $roleDto->name = $this->inputDto->name;
-        $roleDto->system_name = $this->inputDto->systemName;
+        $roleDto->systemName = $this->inputDto->systemName;
 
         $this->roleService->create($roleDto);
     }

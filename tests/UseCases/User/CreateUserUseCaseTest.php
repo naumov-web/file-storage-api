@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\UseCase\User;
+namespace Tests\UseCases\User;
 
 use App\Enums\UseCaseSystemNamesEnum;
 use App\Models\User\Exceptions\UserWithEmailAlreadyExistsException;
@@ -8,7 +8,7 @@ use App\Models\User\Model;
 use App\UseCases\Common\Exceptions\UseCaseNotFoundException;
 use App\UseCases\User\InputDTO\CreateUserInputDTO;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Tests\UseCase\BaseUseCaseTest;
+use Tests\UseCases\BaseUseCaseTest;
 
 /**
  * Class CreateUserUseCaseTest

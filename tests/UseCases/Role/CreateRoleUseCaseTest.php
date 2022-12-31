@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\UseCase\Role;
+namespace Tests\UseCases\Role;
 
 use App\Enums\UseCaseSystemNamesEnum;
 use App\Models\Role\Exceptions\RoleWithNameAlreadyExistsException;
@@ -9,7 +9,7 @@ use App\Models\Role\Model;
 use App\UseCases\Common\Exceptions\UseCaseNotFoundException;
 use App\UseCases\Role\InputDTO\CreateRoleInputDTO;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Tests\UseCase\BaseUseCaseTest;
+use Tests\UseCases\BaseUseCaseTest;
 
 /**
  * Class CreateRoleUseCaseTest

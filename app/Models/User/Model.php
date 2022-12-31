@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use Illuminate\Foundation\Auth\User as Authentication;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 /**
@@ -15,6 +16,8 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
  * @property string $password
  * @property string $name
  * @property string|null $confirmation_code
+ *
+ * @property Collection $roles
  */
 final class Model extends Authentication implements JWTSubject
 {
@@ -46,6 +49,16 @@ final class Model extends Authentication implements JWTSubject
             'user_id',
             'role_id'
         );
+    }
+
+    /**
+     * Get role system names list
+     *
+     * @return array
+     */
+    public function getRoleSystemNames(): array
+    {
+        return $this->roles->pluck('system_name')->toArray();
     }
 
     /**

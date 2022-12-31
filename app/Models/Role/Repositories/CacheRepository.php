@@ -17,9 +17,7 @@ final class CacheRepository implements IRoleCacheRepository
      * CacheRepository constructor
      * @param IRoleRepository $databaseRepository
      */
-    public function __construct(private IRoleRepository $databaseRepository)
-    {
-    }
+    public function __construct(private IRoleRepository $databaseRepository) {}
 
     /**
      * @inheritDoc
