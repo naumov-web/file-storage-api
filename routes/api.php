@@ -23,6 +23,7 @@ Route::prefix('/v1')
         Route::middleware(['auth.jwt'])->group(function() {
             Route::prefix('/account')
                 ->namespace('Account')
+                ->name('account.')
                 ->group(function () {
                     Route::get('/user', 'UserController@getCurrent');
                     Route::put('/user', 'UserController@updateCurrent');
@@ -30,8 +31,11 @@ Route::prefix('/v1')
 
             Route::prefix('/admin')
                 ->namespace('Admin')
+                ->name('admin.')
+                ->middleware(['access'])
                 ->group(function () {
-                    Route::post('/invitations', 'InvitationsController@create');
+                    Route::post('/invitations', 'InvitationsController@create')
+                        ->name('invitations.create');
                 });
         });
 

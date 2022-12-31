@@ -141,6 +141,7 @@ return [
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
     'datetime_cannot_be_past' => 'Datetime cannot to be past',
+    'invitation_already_exists' => 'Invitation already exists',
 
     /*
     |--------------------------------------------------------------------------

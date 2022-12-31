@@ -44,7 +44,7 @@ final class InvitationsController extends BaseController
                 [
                     'errors' => [
                         'email' => [
-
+                            __('validation.invitation_already_exists')
                         ]
                     ]
                 ],
