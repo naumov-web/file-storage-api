@@ -172,6 +172,29 @@ paths:
           schema:
             $ref: "#/definitions/ValidationFailedResponseModel"
 
+  /v1/invitations/confirm:
+    get:
+      tags:
+        - invitation
+      summary: Confirm invitation
+      description: Confirm specific invitation by code
+      parameters:
+        - in: query
+          name: code
+          required: true
+          type: string
+      responses:
+        301:
+          description: Redirect to login page
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ForbiddenResponseModel"
+        404:
+          description: Not found
+          schema:
+            $ref: "#/definitions/NotFoundResponseModel"
+
 definitions:
 
   # Login models
@@ -257,6 +280,14 @@ definitions:
         type: string
 
   ForbiddenResponseModel:
+    type: object
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
+
+  NotFoundResponseModel:
     type: object
     properties:
       success:
