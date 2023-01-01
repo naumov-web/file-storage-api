@@ -7,6 +7,8 @@ use App\Models\Invitation\Contacts\IInvitationDatabaseRepository;
 use App\Models\Invitation\Contacts\IInvitationService;
 use App\Models\Invitation\DTO\InvitationDTO;
 use App\Models\Invitation\Enums\StatusesEnum;
+use App\Models\Invitation\Exceptions\InvitationDoesntExistException;
+use App\Models\Invitation\Exceptions\InvitationExpiredException;
 use App\Models\Invitation\Exceptions\InvitationForEmailAlreadyExistsException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -64,5 +66,52 @@ final class Service implements IInvitationService
         $dto->password = $originPassword;
 
         return $dto;
+    }
+
+    /**
+     * @inheritDoc
+     * @throws InvitationDoesntExistException
+     * @throws InvitationExpiredException
+     */
+    public function getInvitation(string $code): InvitationDTO
+    {
+        $invitationDto = $this->cacheRepository->getInvitationByCode($code);
+
+        if (!$invitationDto) {
+            throw new InvitationDoesntExistException();
+        }
+
+        $now = time();
+        $expiredAtTimestamp = strtotime($invitationDto->expiredAt);
+
+        if ($now > $expiredAtTimestamp) {
+            $this->setExpired($invitationDto);
+            throw new InvitationExpiredException();
+        }
+
+        return $invitationDto;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setAccepted(InvitationDTO $dto): void
+    {
+        $dto->statusId = StatusesEnum::ACCEPTED;
+        $this->databaseRepository->updateStatus($dto);
+        $this->cacheRepository->resetAllInvitationsCache();
+    }
+
+    /**
+     * Set invitation status to "Expired"
+     *
+     * @param InvitationDTO $dto
+     * @return void
+     */
+    private function setExpired(InvitationDTO $dto): void
+    {
+        $dto->statusId = StatusesEnum::EXPIRED;
+        $this->databaseRepository->updateStatus($dto);
+        $this->cacheRepository->resetAllInvitationsCache();
     }
 }

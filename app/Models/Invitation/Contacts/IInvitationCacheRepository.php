@@ -25,4 +25,12 @@ interface IInvitationCacheRepository extends IInvitationRepository, ICacheReposi
      * @return InvitationDTO|null
      */
     public function getInvitationByEmail(string $email): InvitationDTO|null;
+
+    /**
+     * Get invitation by code
+     *
+     * @param string $code
+     * @return InvitationDTO|null
+     */
+    public function getInvitationByCode(string $code): InvitationDTO|null;
 }

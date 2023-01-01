@@ -86,4 +86,23 @@ final class CacheRepository implements IInvitationCacheRepository
             return $items;
         }
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getInvitationByCode(string $code): InvitationDTO|null
+    {
+        $items = $this->getInvitations();
+
+        foreach ($items as $item) {
+            /**
+             * @var InvitationDTO $item
+             */
+            if ($item->invitationCode === $code) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
 }

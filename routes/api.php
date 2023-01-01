@@ -39,6 +39,6 @@ Route::prefix('/v1')
                 });
         });
 
-        Route::get('/invitations/confirm', 'InvitationController@confirm')
+        Route::get('/invitations/confirm', 'InvitationsController@confirm')
             ->name('invitations.confirm');
     });

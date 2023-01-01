@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UseCaseSystemNamesEnum;
+use App\UseCases\Invitation\ConfirmInvitationUseCase;
 use App\UseCases\Invitation\CreateInvitationUseCase;
 use App\UseCases\Role\CreateRoleUseCase;
 use App\UseCases\User\AuthorizeUserUseCase;
@@ -15,6 +16,7 @@ return [
         UseCaseSystemNamesEnum::AUTHORIZE_USER => AuthorizeUserUseCase::class,
         UseCaseSystemNamesEnum::GET_USER => GetUserUseCase::class,
         UseCaseSystemNamesEnum::UPDATE_USER => UpdateUserUseCase::class,
-        UseCaseSystemNamesEnum::CREATE_INVITATION => CreateInvitationUseCase::class
+        UseCaseSystemNamesEnum::CREATE_INVITATION => CreateInvitationUseCase::class,
+        UseCaseSystemNamesEnum::CONFIRM_INVITATION => ConfirmInvitationUseCase::class
     ]
 ];
