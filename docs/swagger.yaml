@@ -125,6 +125,49 @@ paths:
           schema:
             $ref: "#/definitions/ValidationFailedResponseModel"
 
+  /v1/account/files:
+    post:
+      tags:
+        - file
+      summary: Create file
+      description: Create file for current user
+      security:
+        - JWT: [ ]
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          type: string
+          name: X-Locale
+          enum:
+            - ru
+            - en
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+        - name: CreateUserFileRequestИщвн
+          in: body
+          description: Create user file request body
+          required: true
+          schema:
+            $ref: "#/definitions/CreateUserFileRequestModel"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/SimpleSuccessResponseModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedResponseModel"
+        422:
+          description: Validation failed
+          schema:
+            $ref: "#/definitions/ValidationFailedResponseModel"
+
   /v1/admin/invitations:
     post:
       tags:
@@ -236,6 +279,18 @@ definitions:
       password:
         type: string
 
+  # Create file model
+
+  CreateUserFileRequestModel:
+    type: object
+    required:
+      - file
+    properties:
+      file:
+        $ref: "#/definitions/CreateFileRequestModel"
+      description:
+        type: string
+
   # Admin / Invite user model
 
   InviteUserRequestModel:
@@ -315,4 +370,18 @@ definitions:
       name:
         type: string
       systemName:
+        type: string
+
+  CreateFileRequestModel:
+    type: object
+    required:
+      - name
+      - mime
+      - content
+    properties:
+      name:
+        type: string
+      mime:
+        type: string
+      content:
         type: string
