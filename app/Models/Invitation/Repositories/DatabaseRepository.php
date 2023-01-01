@@ -54,4 +54,16 @@ final class DatabaseRepository implements IInvitationDatabaseRepository
 
         return $this->composer->getFromCollection($models);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function updateStatus(InvitationDTO $dto): void
+    {
+        Model::query()
+            ->where('id', $dto->id)
+            ->update([
+                'status_id' => $dto->statusId
+            ]);
+    }
 }

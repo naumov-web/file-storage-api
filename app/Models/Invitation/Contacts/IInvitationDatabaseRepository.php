@@ -17,4 +17,12 @@ interface IInvitationDatabaseRepository extends IInvitationRepository
      * @return InvitationDTO
      */
     public function create(InvitationDTO $dto): InvitationDTO;
+
+    /**
+     * Update status for invitation instance
+     *
+     * @param InvitationDTO $dto
+     * @return void
+     */
+    public function updateStatus(InvitationDTO $dto): void;
 }

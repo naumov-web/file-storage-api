@@ -15,9 +15,10 @@ interface IUserService
      *
      * @param UserDTO $dto
      * @param bool $isAutoConfirm
+     * @param bool $encodePassword
      * @return UserDTO
      */
-    public function createUser(UserDTO $dto, bool $isAutoConfirm): UserDTO;
+    public function createUser(UserDTO $dto, bool $isAutoConfirm, bool $encodePassword = true): UserDTO;
 
     /**
      * Sync roles for specific user

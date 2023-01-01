@@ -30,7 +30,7 @@ final class Service implements IUserService
      * @inheritDoc
      * @throws UserWithEmailAlreadyExistsException
      */
-    public function createUser(UserDTO $dto, bool $isAutoConfirm): UserDTO
+    public function createUser(UserDTO $dto, bool $isAutoConfirm, bool $encodePassword = true): UserDTO
     {
         $existingModel = $this->cacheRepository->getUserByEmail($dto->email);
 
@@ -38,7 +38,7 @@ final class Service implements IUserService
             throw new UserWithEmailAlreadyExistsException();
         }
 
-        if ($dto->password) {
+        if ($dto->password && $encodePassword) {
             $dto->password = Hash::make($dto->password);
         }
 

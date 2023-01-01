@@ -185,15 +185,7 @@ paths:
           type: string
       responses:
         301:
-          description: Redirect to login page
-        403:
-          description: Forbidden
-          schema:
-            $ref: "#/definitions/ForbiddenResponseModel"
-        404:
-          description: Not found
-          schema:
-            $ref: "#/definitions/NotFoundResponseModel"
+          description: Redirect to login or error page
 
 definitions:
 
