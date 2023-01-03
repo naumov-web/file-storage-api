@@ -49,4 +49,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const CONFIRM_INVITATION = 'confirm_invitation';
+
+    /**
+     * Use case "Create user file"
+     * @var string
+     */
+    public const CREATE_USER_FILE = 'create_user_file';
 }

@@ -25,8 +25,16 @@ Route::prefix('/v1')
                 ->namespace('Account')
                 ->name('account.')
                 ->group(function () {
-                    Route::get('/user', 'UserController@getCurrent');
-                    Route::put('/user', 'UserController@updateCurrent');
+                    Route::prefix('/user')
+                        ->group(function () {
+                            Route::get('/', 'UserController@getCurrent');
+                            Route::put('/', 'UserController@updateCurrent');
+                        });
+
+                    Route::prefix('/files')
+                        ->group(function () {
+                            Route::post('/', 'FilesController@create');
+                        });
                 });
 
             Route::prefix('/admin')

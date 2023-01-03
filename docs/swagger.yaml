@@ -163,6 +163,10 @@ paths:
           description: Unauthorized
           schema:
             $ref: "#/definitions/UnauthorizedResponseModel"
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ForbiddenResponseModel"
         422:
           description: Validation failed
           schema:

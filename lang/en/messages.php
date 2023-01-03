@@ -8,5 +8,7 @@ return [
     'incorrect_email_or_password' => 'Incorrect email or password!',
     'user_successfully_loaded' => 'User successfully loaded!',
     'user_successfully_updated' => 'User successfully updated!',
-    'invitation_successfully_created' => 'Invitation successfully created!'
+    'invitation_successfully_created' => 'Invitation successfully created!',
+    'file_successfully_created' => 'File successfully created!',
+    'file_already_exists' => 'File already exists!'
 ];
