@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Gateways\Contracts\IFileGatewayInterface;
+use App\Gateways\File\LocalGateway;
+use App\Models\File\Contracts\IFileService;
 use App\Models\Invitation\Contacts\IInvitationService;
 use App\Models\Role\Contracts\IRoleCacheRepository;
 use App\Models\Role\Contracts\IRoleDatabaseRepository;
@@ -16,6 +19,7 @@ use App\Models\User\Contracts\IUserRepository;
 use App\Models\User\Contracts\IUserService;
 use App\Models\User;
 use App\Models\Invitation;
+use App\Models\File;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -51,6 +55,22 @@ class AppServiceProvider extends ServiceProvider
             Invitation\Repositories\DatabaseRepository::class
         );
         $this->app->bind(IInvitationService::class, Invitation\Services\Service::class);
+        // File
+        $this->app->bind(
+            File\Contracts\IFileCacheRepository::class,
+            File\Repositories\CacheRepository::class
+        );
+        $this->app->bind(
+            File\Contracts\IFileDatabaseRepository::class,
+            File\Repositories\DatabaseRepository::class
+        );
+        $this->app->bind(
+            File\Contracts\IFileRepository::class,
+            File\Repositories\DatabaseRepository::class
+        );
+        $this->app->bind(IFileService::class, File\Service\Service::class);
+        // Gateways
+        $this->app->bind(IFileGatewayInterface::class, LocalGateway::class);
     }
 
     /**
