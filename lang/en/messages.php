@@ -10,5 +10,7 @@ return [
     'user_successfully_updated' => 'User successfully updated!',
     'invitation_successfully_created' => 'Invitation successfully created!',
     'file_successfully_created' => 'File successfully created!',
-    'file_already_exists' => 'File already exists!'
+    'file_already_exists' => 'File already exists!',
+    'file_successfully_deleted' => 'File successfully deleted!',
+    'you_are_not_owner_of_the_file' => 'You are not owner of the file!'
 ];

@@ -27,4 +27,13 @@ interface IFileService
      * @return FileDTO
      */
     public function create(FileDTO $dto): FileDTO;
+
+    /**
+     * Delete file instance by id
+     *
+     * @param int $id
+     * @param int $userOwnerId
+     * @return void
+     */
+    public function delete(int $id, int $userOwnerId): void;
 }

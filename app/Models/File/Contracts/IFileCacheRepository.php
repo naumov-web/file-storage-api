@@ -3,6 +3,7 @@
 namespace App\Models\File\Contracts;
 
 use App\Models\Common\Contacts\ICacheRepository;
+use App\Models\File\DTO\FileDTO;
 
 /**
  * Interface IFileCacheRepository
@@ -17,4 +18,13 @@ interface IFileCacheRepository extends IFileRepository, ICacheRepository
      * @return void
      */
     public function resetCacheForUser(int $userOwnerId): void;
+
+    /**
+     * Get file instance by id
+     *
+     * @param int $id
+     * @param int $userOwnerId
+     * @return FileDTO|null
+     */
+    public function getFile(int $id, int $userOwnerId): ?FileDTO;
 }

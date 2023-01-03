@@ -18,4 +18,12 @@ interface IFileGatewayInterface
      * @return FilePathDTO
      */
     public function saveContent(string $name, string $content): FilePathDTO;
+
+    /**
+     * Delete file by path
+     *
+     * @param string $path
+     * @return void
+     */
+    public function delete(string $path): void;
 }

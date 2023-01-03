@@ -17,4 +17,12 @@ interface IFileDatabaseRepository extends IFileRepository
      * @return FileDTO
      */
     public function create(FileDTO $dto): FileDTO;
+
+    /**
+     * Delete file instance
+     *
+     * @param FileDTO $dto
+     * @return void
+     */
+    public function delete(FileDTO $dto): void;
 }

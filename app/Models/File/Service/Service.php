@@ -58,4 +58,20 @@ final class Service implements IFileService
 
         return $dto;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id, int $userOwnerId): void
+    {
+        $dto = $this->cacheRepository->getFile($id, $userOwnerId);
+
+        if (!$dto) {
+            return;
+        }
+
+        $this->databaseRepository->delete($dto);
+        $this->fileGateway->delete($dto->path);
+        $this->cacheRepository->resetCacheForUser($userOwnerId);
+    }
 }

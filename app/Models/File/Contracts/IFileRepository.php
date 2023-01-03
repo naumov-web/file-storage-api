@@ -2,6 +2,7 @@
 
 namespace App\Models\File\Contracts;
 
+use App\Models\File\DTO\FileDTO;
 use Illuminate\Support\Collection;
 
 /**

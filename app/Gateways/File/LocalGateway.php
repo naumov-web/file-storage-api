@@ -39,4 +39,12 @@ final class LocalGateway implements IFileGatewayInterface
 
         return $result;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(string $path): void
+    {
+        @unlink(storage_path($path));
+    }
 }
