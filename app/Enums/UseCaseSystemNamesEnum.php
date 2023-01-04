@@ -61,4 +61,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const DELETE_USER_FILE = 'delete_user_file';
+
+    /**
+     * Use case "Get handbooks"
+     * @var string
+     */
+    public const GET_HANDBOOKS = 'get_handbooks';
 }

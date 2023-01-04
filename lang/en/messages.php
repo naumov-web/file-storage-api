@@ -12,5 +12,6 @@ return [
     'file_successfully_created' => 'File successfully created!',
     'file_already_exists' => 'File already exists!',
     'file_successfully_deleted' => 'File successfully deleted!',
-    'you_are_not_owner_of_the_file' => 'You are not owner of the file!'
+    'you_are_not_owner_of_the_file' => 'You are not owner of the file!',
+    'handbooks_successfully_loaded' => 'Handbooks successfully loaded!'
 ];

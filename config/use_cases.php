@@ -3,6 +3,7 @@
 use App\Enums\UseCaseSystemNamesEnum;
 use App\UseCases\File\CreateUserFileUseCase;
 use App\UseCases\File\DeleteUserFileUseCase;
+use App\UseCases\Handbook\GetHandbooksUseCase;
 use App\UseCases\Invitation\ConfirmInvitationUseCase;
 use App\UseCases\Invitation\CreateInvitationUseCase;
 use App\UseCases\Role\CreateRoleUseCase;
@@ -21,6 +22,7 @@ return [
         UseCaseSystemNamesEnum::CREATE_INVITATION => CreateInvitationUseCase::class,
         UseCaseSystemNamesEnum::CONFIRM_INVITATION => ConfirmInvitationUseCase::class,
         UseCaseSystemNamesEnum::CREATE_USER_FILE => CreateUserFileUseCase::class,
-        UseCaseSystemNamesEnum::DELETE_USER_FILE => DeleteUserFileUseCase::class
+        UseCaseSystemNamesEnum::DELETE_USER_FILE => DeleteUserFileUseCase::class,
+        UseCaseSystemNamesEnum::GET_HANDBOOKS => GetHandbooksUseCase::class
     ]
 ];
