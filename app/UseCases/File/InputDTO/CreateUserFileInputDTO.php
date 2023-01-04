@@ -28,5 +28,5 @@ final class CreateUserFileInputDTO extends BaseUseCaseDTO
      * File description value
      * @var string|null
      */
-    public string|null $description;
+    public string|null $description = null;
 }

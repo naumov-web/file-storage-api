@@ -4,6 +4,7 @@ namespace App\UseCases\File;
 
 use App\Models\File\Contracts\IFileService;
 use App\Models\File\DTO\FileDTO;
+use App\Models\File\Exceptions\FileAlreadyExistsException;
 use App\UseCases\BaseUseCase;
 use App\UseCases\File\InputDTO\CreateUserFileInputDTO;
 
@@ -29,6 +30,7 @@ final class CreateUserFileUseCase extends BaseUseCase
 
     /**
      * @inheritDoc
+     * @throws FileAlreadyExistsException
      */
     public function execute(): void
     {
@@ -43,11 +45,16 @@ final class CreateUserFileUseCase extends BaseUseCase
         $fileDto->userOwnerId = $inputDto->user->id;
         $fileDto->name = $inputDto->file->name;
         $fileDto->mime = $inputDto->file->mime;
-        $fileDto->size = filesize($filePathDto->fullPath);
+        $fileDto->size = $filePathDto->size;
         $fileDto->path = $filePathDto->path;
-        $fileDto->sha1 = sha1_file($filePathDto->fullPath);
+        $fileDto->sha1 = $filePathDto->sha1;
         $fileDto->description = $inputDto->description;
 
-        $this->fileService->create($fileDto);
+        try {
+            $this->fileService->create($fileDto);
+        } catch (FileAlreadyExistsException $exception) {
+            $this->fileService->deleteFileByPath($fileDto->path);
+            throw $exception;
+        }
     }
 }

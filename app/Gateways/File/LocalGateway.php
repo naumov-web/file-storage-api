@@ -3,7 +3,7 @@
 namespace App\Gateways\File;
 
 use App\Gateways\Contracts\IFileGatewayInterface;
-use App\Models\Common\DTO\FilePathDTO;
+use App\Models\Common\DTO\FileSavingResultDTO;
 
 /**
  * Class LocalGateway
@@ -15,7 +15,7 @@ final class LocalGateway implements IFileGatewayInterface
     /**
      * @inheritDoc
      */
-    public function saveContent(string $name, string $content): FilePathDTO
+    public function saveContent(string $name, string $content): FileSavingResultDTO
     {
         $path = 'files/' . uniqid();
         $dirPath = storage_path($path);
@@ -33,9 +33,11 @@ final class LocalGateway implements IFileGatewayInterface
             base64_decode($content)
         );
 
-        $result = new FilePathDTO();
+        $result = new FileSavingResultDTO();
         $result->path = $path;
         $result->fullPath = storage_path($path);
+        $result->size = filesize($result->fullPath);
+        $result->sha1 = sha1_file($result->fullPath);
 
         return $result;
     }

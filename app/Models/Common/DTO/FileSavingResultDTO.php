@@ -3,10 +3,10 @@
 namespace App\Models\Common\DTO;
 
 /**
- * Class FilePathDTO
+ * Class FileSavingResultDTO
  * @package App\Models\Common\DTO
  */
-final class FilePathDTO
+final class FileSavingResultDTO
 {
     /**
      * File path value
@@ -19,4 +19,16 @@ final class FilePathDTO
      * @var string
      */
     public string $fullPath;
+
+    /**
+     * File sha1 hash value
+     * @var string
+     */
+    public string $sha1;
+
+    /**
+     * File size value
+     * @var int
+     */
+    public int $size;
 }

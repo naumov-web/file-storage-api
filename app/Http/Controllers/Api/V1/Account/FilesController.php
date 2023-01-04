@@ -79,9 +79,6 @@ final class FilesController extends BaseController
          * @var User\Model $user
          */
         $user = auth()->user();
-        if (!$this->checkFileAccess($file)) {
-            return $this->getFileForbiddenResponse();
-        }
 
         $inputDto = new DeleteUserFileInputDTO();
         $inputDto->id = $file->id;
@@ -89,32 +86,16 @@ final class FilesController extends BaseController
 
         $useCase = $this->useCaseFactory->createUseCase(UseCaseSystemNamesEnum::DELETE_USER_FILE);
         $useCase->setInputDTO($inputDto);
-        $useCase->execute();
+        try {
+            $useCase->execute();
+        } catch (File\Exceptions\FileForbiddenException) {
+            return $this->getFileForbiddenResponse();
+        }
 
         return \response()->json([
             'success' => true,
             'message' => __('messages.file_successfully_deleted')
         ]);
-    }
-
-    /**
-     * Check file access
-     *
-     * @param File\Model|null $file
-     * @return bool
-     */
-    private function checkFileAccess(?File\Model $file): bool
-    {
-        /**
-         * @var User\Model $user
-         */
-        $user = auth()->user();
-
-        if ($file && $user) {
-            return $file->user_owner_id === $user->id;
-        }
-
-        return true;
     }
 
     /**

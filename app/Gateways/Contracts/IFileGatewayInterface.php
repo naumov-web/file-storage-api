@@ -2,7 +2,7 @@
 
 namespace App\Gateways\Contracts;
 
-use App\Models\Common\DTO\FilePathDTO;
+use App\Models\Common\DTO\FileSavingResultDTO;
 
 /**
  * Interface FileGatewayInterface
@@ -15,9 +15,9 @@ interface IFileGatewayInterface
      *
      * @param string $name
      * @param string $content
-     * @return FilePathDTO
+     * @return FileSavingResultDTO
      */
-    public function saveContent(string $name, string $content): FilePathDTO;
+    public function saveContent(string $name, string $content): FileSavingResultDTO;
 
     /**
      * Delete file by path
