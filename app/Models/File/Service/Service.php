@@ -3,12 +3,13 @@
 namespace App\Models\File\Service;
 
 use App\Gateways\Contracts\IFileGatewayInterface;
-use App\Models\Common\DTO\FilePathDTO;
+use App\Models\Common\DTO\FileSavingResultDTO;
 use App\Models\File\Contracts\IFileCacheRepository;
 use App\Models\File\Contracts\IFileDatabaseRepository;
 use App\Models\File\Contracts\IFileService;
 use App\Models\File\DTO\FileDTO;
 use App\Models\File\Exceptions\FileAlreadyExistsException;
+use App\Models\File\Exceptions\FileForbiddenException;
 
 /**
  * Class Service
@@ -31,9 +32,17 @@ final class Service implements IFileService
     /**
      * @inheritDoc
      */
-    public function saveContentToFile(string $name, string $content): FilePathDTO
+    public function saveContentToFile(string $name, string $content): FileSavingResultDTO
     {
         return $this->fileGateway->saveContent($name, $content);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteFileByPath(string $path): void
+    {
+        $this->fileGateway->delete($path);
     }
 
     /**
@@ -57,5 +66,22 @@ final class Service implements IFileService
         $this->cacheRepository->resetCacheForUser($dto->userOwnerId);
 
         return $dto;
+    }
+
+    /**
+     * @inheritDoc
+     * @throws FileForbiddenException
+     */
+    public function delete(int $id, int $userOwnerId): void
+    {
+        $dto = $this->cacheRepository->getFile($id, $userOwnerId);
+
+        if (!$dto) {
+            throw new FileForbiddenException();
+        }
+
+        $this->databaseRepository->delete($dto);
+        $this->fileGateway->delete($dto->path);
+        $this->cacheRepository->resetCacheForUser($userOwnerId);
     }
 }

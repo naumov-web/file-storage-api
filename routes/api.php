@@ -34,6 +34,7 @@ Route::prefix('/v1')
                     Route::prefix('/files')
                         ->group(function () {
                             Route::post('/', 'FilesController@create');
+                            Route::delete('{file}', 'FilesController@delete');
                         });
                 });
 

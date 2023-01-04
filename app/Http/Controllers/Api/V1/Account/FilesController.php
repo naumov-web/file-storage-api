@@ -6,10 +6,12 @@ use App\Enums\UseCaseSystemNamesEnum;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Api\V1\Account\Files\CreateUserFileRequest;
 use App\Models\File\Exceptions\FileAlreadyExistsException;
-use App\Models\User\Model;
+use App\Models\User;
+use App\Models\File;
 use App\UseCases\Common\DTO\FileDTO;
 use App\UseCases\Common\Exceptions\UseCaseNotFoundException;
 use App\UseCases\File\InputDTO\CreateUserFileInputDTO;
+use App\UseCases\File\InputDTO\DeleteUserFileInputDTO;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -31,7 +33,7 @@ final class FilesController extends BaseController
     public function create(CreateUserFileRequest $request): JsonResponse
     {
         /**
-         * @var Model $user
+         * @var User\Model $user
          */
         $user = auth()->user();
         $inputDto = new CreateUserFileInputDTO();
@@ -61,5 +63,54 @@ final class FilesController extends BaseController
             'success' => true,
             'message' => __('messages.file_successfully_created')
         ]);
+    }
+
+    /**
+     * Handle request for deleting of specific file
+     *
+     * @param File\Model $file
+     * @return JsonResponse
+     * @throws BindingResolutionException
+     * @throws UseCaseNotFoundException
+     */
+    public function delete(File\Model $file): JsonResponse
+    {
+        /**
+         * @var User\Model $user
+         */
+        $user = auth()->user();
+
+        $inputDto = new DeleteUserFileInputDTO();
+        $inputDto->id = $file->id;
+        $inputDto->userOwnerId = $user->id;
+
+        $useCase = $this->useCaseFactory->createUseCase(UseCaseSystemNamesEnum::DELETE_USER_FILE);
+        $useCase->setInputDTO($inputDto);
+        try {
+            $useCase->execute();
+        } catch (File\Exceptions\FileForbiddenException) {
+            return $this->getFileForbiddenResponse();
+        }
+
+        return \response()->json([
+            'success' => true,
+            'message' => __('messages.file_successfully_deleted')
+        ]);
+    }
+
+    /**
+     * Get response with info about "Forbidden" status
+     *
+     * @return JsonResponse
+     */
+    private function getFileForbiddenResponse(): JsonResponse
+    {
+        return \response()->json(
+            [
+                'success' => false,
+                'message' => __('messages.you_are_not_owner_of_the_file')
+            ],
+            Response::HTTP_FORBIDDEN
+        );
     }
 }

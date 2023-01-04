@@ -148,7 +148,7 @@ paths:
           name: Authorization
           required: true
           type: string
-        - name: CreateUserFileRequestИщвн
+        - name: CreateUserFileRequestBody
           in: body
           description: Create user file request body
           required: true
@@ -171,6 +171,49 @@ paths:
           description: Validation failed
           schema:
             $ref: "#/definitions/ValidationFailedResponseModel"
+
+  /v1/account/files/{file}:
+    delete:
+      tags:
+        - file
+      summary: Delete file
+      description: Delete specific file for current user
+      security:
+        - JWT: [ ]
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          type: string
+          name: X-Locale
+          enum:
+            - ru
+            - en
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+        - in: path
+          name: file
+          required: true
+          type: number
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/SimpleSuccessResponseModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedResponseModel"
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ForbiddenResponseModel"
+        404:
+          description: Not found
+          schema:
+            $ref: "#/definitions/NotFoundResponseModel"
 
   /v1/admin/invitations:
     post:

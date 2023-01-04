@@ -4,6 +4,7 @@ namespace App\Models\File\Repositories;
 
 use App\Models\File\Contracts\IFileCacheRepository;
 use App\Models\File\Contracts\IFileDatabaseRepository;
+use App\Models\File\DTO\FileDTO;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -72,5 +73,24 @@ final class CacheRepository implements IFileCacheRepository
     {
         $tag = $this->getUserTag($userOwnerId);
         Cache::tags([$tag])->flush();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFile(int $id, int $userOwnerId): ?FileDTO
+    {
+        $files = $this->getUserFiles($userOwnerId);
+
+        foreach ($files as $file) {
+            /**
+             * @var FileDTO $file
+             */
+            if ($file->id === $id) {
+                return $file;
+            }
+        }
+
+        return null;
     }
 }
