@@ -35,6 +35,8 @@ Route::prefix('/v1')
                         ->group(function () {
                             Route::post('/', 'FilesController@create');
                             Route::delete('{file}', 'FilesController@delete');
+
+                            Route::post('/{file}/links', 'LinksController@create');
                         });
                 });
 
@@ -50,4 +52,7 @@ Route::prefix('/v1')
 
         Route::get('/invitations/confirm', 'InvitationsController@confirm')
             ->name('invitations.confirm');
+        Route::get('/handbooks', 'HandbooksController@index');
+        Route::get('/files/{linkCode}', 'FilesController@download')
+            ->name('files.download');
     });

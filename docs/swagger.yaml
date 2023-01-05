@@ -215,6 +215,61 @@ paths:
           schema:
             $ref: "#/definitions/NotFoundResponseModel"
 
+  /v1/account/files/{file}/links:
+    post:
+      tags:
+        - link
+      summary: Create link
+      description: Create link for specific file
+      security:
+        - JWT: [ ]
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: header
+          type: string
+          name: X-Locale
+          enum:
+            - ru
+            - en
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+        - in: path
+          name: file
+          required: true
+          type: number
+        - name: CreateLinkRequestBody
+          in: body
+          description: Create link request body
+          required: true
+          schema:
+            $ref: "#/definitions/CreateLinkRequestModel"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/CreateLinkSuccessResponseModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedResponseModel"
+        403:
+          description: Forbidden
+          schema:
+            $ref: "#/definitions/ForbiddenResponseModel"
+        404:
+          description: Not found
+          schema:
+            $ref: "#/definitions/NotFoundResponseModel"
+        422:
+          description: Validation failed
+          schema:
+            $ref: "#/definitions/ValidationFailedResponseModel"
+
   /v1/admin/invitations:
     post:
       tags:
@@ -277,6 +332,20 @@ paths:
         301:
           description: Redirect to login or error page
 
+  /v1/handbooks:
+    get:
+      tags:
+        - handbook
+      summary: Get handbooks
+      description: Get all handbooks
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/GetHandbooksResponseModel"
+
 definitions:
 
   # Login models
@@ -337,6 +406,48 @@ definitions:
         $ref: "#/definitions/CreateFileRequestModel"
       description:
         type: string
+
+  # Create link model
+
+  CreateLinkRequestModel:
+    type: object
+    required:
+      - typeId
+    properties:
+      typeId:
+        type: integer
+      expiredAt:
+        type: string
+
+  CreateLinkSuccessResponseModel:
+    type: object
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
+      url:
+        type: string
+
+  # Get handbooks model
+
+  GetHandbooksResponseModel:
+    type: object
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
+      handbooks:
+        $ref: "#/definitions/HandbooksResponseModel"
+
+  HandbooksResponseModel:
+    type: object
+    properties:
+      linkTypes:
+        type: array
+        items:
+          $ref: "#/definitions/DefaultHandbookItemResponseModel"
 
   # Admin / Invite user model
 
@@ -431,4 +542,12 @@ definitions:
       mime:
         type: string
       content:
+        type: string
+
+  DefaultHandbookItemResponseModel:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
         type: string

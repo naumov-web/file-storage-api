@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\Account;
 
 use App\Enums\UseCaseSystemNamesEnum;
-use App\Http\Controllers\BaseController;
 use App\Http\Requests\Api\V1\Account\Files\CreateUserFileRequest;
 use App\Models\File\Exceptions\FileAlreadyExistsException;
 use App\Models\User;
@@ -20,7 +19,7 @@ use Illuminate\Http\Response;
  * Class FilesController
  * @package App\Http\Controllers\Api\V1\Account
  */
-final class FilesController extends BaseController
+final class FilesController extends BaseAccountController
 {
     /**
      * Handle request for creation of file for current user
@@ -96,21 +95,5 @@ final class FilesController extends BaseController
             'success' => true,
             'message' => __('messages.file_successfully_deleted')
         ]);
-    }
-
-    /**
-     * Get response with info about "Forbidden" status
-     *
-     * @return JsonResponse
-     */
-    private function getFileForbiddenResponse(): JsonResponse
-    {
-        return \response()->json(
-            [
-                'success' => false,
-                'message' => __('messages.you_are_not_owner_of_the_file')
-            ],
-            Response::HTTP_FORBIDDEN
-        );
     }
 }
