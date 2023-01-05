@@ -67,4 +67,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const GET_HANDBOOKS = 'get_handbooks';
+
+    /**
+     * Use case "Create file link"
+     * @var string
+     */
+    public const CREATE_FILE_LINK = 'create_file_link';
 }

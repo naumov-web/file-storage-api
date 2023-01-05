@@ -53,4 +53,6 @@ Route::prefix('/v1')
         Route::get('/invitations/confirm', 'InvitationsController@confirm')
             ->name('invitations.confirm');
         Route::get('/handbooks', 'HandbooksController@index');
+        Route::get('/files/{linkCode}', 'FilesController@download')
+            ->name('files.download');
     });

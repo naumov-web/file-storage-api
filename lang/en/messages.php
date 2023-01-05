@@ -13,5 +13,6 @@ return [
     'file_already_exists' => 'File already exists!',
     'file_successfully_deleted' => 'File successfully deleted!',
     'you_are_not_owner_of_the_file' => 'You are not owner of the file!',
-    'handbooks_successfully_loaded' => 'Handbooks successfully loaded!'
+    'handbooks_successfully_loaded' => 'Handbooks successfully loaded!',
+    'link_successfully_created' => 'Link successfully created!'
 ];

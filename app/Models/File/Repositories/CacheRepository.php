@@ -41,7 +41,7 @@ final class CacheRepository implements IFileCacheRepository
      */
     public function getUserFiles(int $userOwnerId): Collection
     {
-        $keyName = $this->getDirectoryKey() . '/index';
+        $keyName = $this->getUserFilesKey($userOwnerId);
         $items = Cache::get($keyName);
 
         if ($items) {
@@ -63,7 +63,18 @@ final class CacheRepository implements IFileCacheRepository
      */
     private function getUserTag(int $userOwnerId): string
     {
-        return 'user/' . $userOwnerId . '/files';
+        return 'users/' . $userOwnerId . '/files';
+    }
+
+    /**
+     * Get user files key
+     *
+     * @param int $userOwnerId
+     * @return string
+     */
+    private function getUserFilesKey(int $userOwnerId): string
+    {
+        return 'users/' . $userOwnerId . '/files';
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\File\Service;
+namespace App\Models\File\Services;
 
 use App\Gateways\Contracts\IFileGatewayInterface;
 use App\Models\Common\DTO\FileSavingResultDTO;

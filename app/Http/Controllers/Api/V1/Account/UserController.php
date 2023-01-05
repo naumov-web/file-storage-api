@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\Account;
 
 use App\Enums\UseCaseSystemNamesEnum;
-use App\Http\Controllers\BaseController;
 use App\Http\Requests\Api\V1\Account\User\UpdateUserRequest;
 use App\Http\Resources\Api\V1\User\UserResource;
 use App\Models\User\Model;
@@ -18,7 +17,7 @@ use Illuminate\Http\JsonResponse;
  * Class UserController
  * @package App\Http\Controllers\Api\V1\Account
  */
-final class UserController extends BaseController
+final class UserController extends BaseAccountController
 {
     /**
      * Handle request for getting of current user
