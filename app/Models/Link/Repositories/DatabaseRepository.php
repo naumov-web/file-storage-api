@@ -5,6 +5,7 @@ namespace App\Models\Link\Repositories;
 use App\Models\Link\Composers\LinkDTOComposer;
 use App\Models\Link\Contracts\ILinkDatabaseRepository;
 use App\Models\Link\DTO\LinkDTO;
+use App\Models\Link\Enums\TypesEnum;
 use App\Models\Link\Model;
 use Illuminate\Support\Collection;
 
@@ -49,5 +50,22 @@ final class DatabaseRepository implements ILinkDatabaseRepository
                 ->where('file_id', $fileId)
                 ->get()
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeExpiredTemporaryLinks(): array
+    {
+        $now = date('Y-m-d H:i:s');
+        $query = Model::query()
+            ->where('type_id', TypesEnum::TEMPORARY)
+            ->where('expired_at', '<', $now);
+
+        $fileIds = $query->get()->pluck('file_id')->toArray();
+
+        $query->delete();
+
+        return $fileIds;
     }
 }

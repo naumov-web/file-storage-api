@@ -17,4 +17,11 @@ interface ILinkDatabaseRepository extends ILinkRepository
      * @return LinkDTO
      */
     public function create(LinkDTO $dto): LinkDTO;
+
+    /**
+     * Remove expired temporary links
+     *
+     * @return array
+     */
+    public function removeExpiredTemporaryLinks(): array;
 }

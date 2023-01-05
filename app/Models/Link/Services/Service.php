@@ -62,4 +62,12 @@ final class Service implements ILinkService
 
         return $dto;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeExpiredTemporaryLinks(): array
+    {
+        return $this->databaseRepository->removeExpiredTemporaryLinks();
+    }
 }
