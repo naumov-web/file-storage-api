@@ -74,7 +74,7 @@ final class Service implements IFileService
      */
     public function delete(int $id, int $userOwnerId): void
     {
-        $dto = $this->cacheRepository->getFile($id, $userOwnerId);
+        $dto = $this->cacheRepository->getFileForOwner($id, $userOwnerId);
 
         if (!$dto) {
             throw new FileForbiddenException();
