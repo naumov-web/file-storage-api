@@ -6,6 +6,8 @@ use App\Models\Link\Contracts\ILinkCacheRepository;
 use App\Models\Link\Contracts\ILinkDatabaseRepository;
 use App\Models\Link\Contracts\ILinkService;
 use App\Models\Link\DTO\LinkDTO;
+use App\Models\Link\Enums\TypesEnum;
+use App\Models\Link\Exceptions\PermanentLinkAlreadyExistsException;
 use Illuminate\Support\Str;
 
 /**
@@ -32,9 +34,23 @@ final class Service implements ILinkService
 
     /**
      * @inheritDoc
+     * @throws PermanentLinkAlreadyExistsException
      */
     public function create(LinkDTO $dto): LinkDTO
     {
+        if ($dto->typeId === TypesEnum::PERMANENT) {
+            $links = $this->cacheRepository->getLinks($dto->fileId);
+
+            foreach ($links as $link) {
+                /**
+                 * @var LinkDTO $link
+                 */
+                if ($link->typeId === TypesEnum::PERMANENT) {
+                    throw new PermanentLinkAlreadyExistsException();
+                }
+            }
+        }
+
         $dto->code = Str::random(self::CODE_LENGTH);
         $dto->isEnabled = true;
         $dto->opensCount = 0;
