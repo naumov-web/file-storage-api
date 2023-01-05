@@ -35,7 +35,7 @@ final class CacheRepository implements ILinkCacheRepository
         $keyName = $this->getFileLinksKey($fileId);
         $items = Cache::get($keyName);
 
-        if (!$items) {
+        if ($items) {
             return $items;
         } else {
             $items = $this->databaseRepository->getLinks($fileId);

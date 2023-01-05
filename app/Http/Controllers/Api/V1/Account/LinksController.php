@@ -6,6 +6,7 @@ use App\Enums\UseCaseSystemNamesEnum;
 use App\Http\Requests\Api\V1\Account\Links\CreateFileLinkRequest;
 use App\Models\File;
 use App\Models\Link\Exceptions\FileForbiddenException;
+use App\Models\Link\Exceptions\PermanentLinkAlreadyExistsException;
 use App\Models\User;
 use App\UseCases\Common\Exceptions\UseCaseNotFoundException;
 use App\UseCases\Link\CreateFileLinkUseCase;
@@ -50,6 +51,14 @@ final class LinksController extends BaseAccountController
             $useCase->execute();
         } catch (FileForbiddenException) {
             return $this->getFileForbiddenResponse();
+        } catch (PermanentLinkAlreadyExistsException) {
+            return \response()->json(
+                [
+                    'success' => false,
+                    'message' => __('messages.permanent_link_already_exists')
+                ],
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $linkDto = $useCase->getLinkDto();
