@@ -16,4 +16,12 @@ interface ILinkCacheRepository extends ILinkRepository
      * @return void
      */
     public function resetCacheForFile(int $fileId): void;
+
+    /**
+     * Reset links cache for files by ids
+     *
+     * @param array $fileIds
+     * @return void
+     */
+    public function resetCacheForFiles(array $fileIds): void;
 }

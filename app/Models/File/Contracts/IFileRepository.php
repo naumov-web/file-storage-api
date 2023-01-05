@@ -18,4 +18,12 @@ interface IFileRepository
      * @return Collection
      */
     public function getUserFiles(int $userOwnerId): Collection;
+
+    /**
+     * Get file by id
+     *
+     * @param int $fileId
+     * @return FileDTO|null
+     */
+    public function getFile(int $fileId): ?FileDTO;
 }

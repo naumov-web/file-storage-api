@@ -49,4 +49,12 @@ final class LocalGateway implements IFileGatewayInterface
     {
         @unlink(storage_path($path));
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFullPath(string $path): string
+    {
+        return storage_path($path);
+    }
 }

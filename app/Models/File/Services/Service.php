@@ -84,4 +84,14 @@ final class Service implements IFileService
         $this->fileGateway->delete($dto->path);
         $this->cacheRepository->resetCacheForUser($userOwnerId);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFileFullPath(int $fileId): string
+    {
+        $dto = $this->cacheRepository->getFile($fileId);
+
+        return $this->fileGateway->getFullPath($dto->path);
+    }
 }

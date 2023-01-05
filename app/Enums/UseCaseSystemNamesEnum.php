@@ -79,4 +79,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const CLEAR_EXPIRED_TEMPORARY_LINKS = 'clear_expired_temporary_links';
+
+    /**
+     * Use case "Get file by code"
+     * @var string
+     */
+    public const GET_FILE_BY_CODE = 'get_file_by_code';
 }

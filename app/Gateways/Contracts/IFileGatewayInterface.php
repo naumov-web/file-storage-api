@@ -26,4 +26,12 @@ interface IFileGatewayInterface
      * @return void
      */
     public function delete(string $path): void;
+
+    /**
+     * Get full path by path
+     *
+     * @param string $path
+     * @return string
+     */
+    public function getFullPath(string $path): string;
 }

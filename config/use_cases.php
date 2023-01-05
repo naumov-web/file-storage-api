@@ -3,6 +3,7 @@
 use App\Enums\UseCaseSystemNamesEnum;
 use App\UseCases\File\CreateUserFileUseCase;
 use App\UseCases\File\DeleteUserFileUseCase;
+use App\UseCases\File\GetFileByCodeUseCase;
 use App\UseCases\Handbook\GetHandbooksUseCase;
 use App\UseCases\Invitation\ConfirmInvitationUseCase;
 use App\UseCases\Invitation\CreateInvitationUseCase;
@@ -27,6 +28,7 @@ return [
         UseCaseSystemNamesEnum::DELETE_USER_FILE => DeleteUserFileUseCase::class,
         UseCaseSystemNamesEnum::GET_HANDBOOKS => GetHandbooksUseCase::class,
         UseCaseSystemNamesEnum::CREATE_FILE_LINK => CreateFileLinkUseCase::class,
-        UseCaseSystemNamesEnum::CLEAR_EXPIRED_TEMPORARY_LINKS => ClearExpiredTemporaryLinksUseCase::class
+        UseCaseSystemNamesEnum::CLEAR_EXPIRED_TEMPORARY_LINKS => ClearExpiredTemporaryLinksUseCase::class,
+        UseCaseSystemNamesEnum::GET_FILE_BY_CODE => GetFileByCodeUseCase::class
     ]
 ];

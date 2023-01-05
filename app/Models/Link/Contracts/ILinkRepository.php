@@ -2,6 +2,7 @@
 
 namespace App\Models\Link\Contracts;
 
+use App\Models\Link\DTO\LinkDTO;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,4 +18,12 @@ interface ILinkRepository
      * @return Collection
      */
     public function getLinks(int $fileId): Collection;
+
+    /**
+     * Get link by code
+     *
+     * @param string $code
+     * @return LinkDTO|null
+     */
+    public function getLinkByCode(string $code): ?LinkDTO;
 }
