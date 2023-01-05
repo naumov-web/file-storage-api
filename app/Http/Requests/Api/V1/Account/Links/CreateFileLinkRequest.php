@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\V1\Account\Links;
 
 use App\Http\Requests\Api\BaseApiRequest;
 use App\Models\Link\Enums\TypesEnum;
+use App\ValidationRules\DateTimeNotInPast;
 
 /**
  * Class CreateFileLinkRequest
@@ -29,7 +30,8 @@ final class CreateFileLinkRequest extends BaseApiRequest
             'expiredAt' => [
                 'required_if:typeId,' . TypesEnum::TEMPORARY,
                 'string',
-                'date_format:Y-m-d H:i:s'
+                'date_format:Y-m-d H:i:s',
+                new DateTimeNotInPast()
             ]
         ];
     }
