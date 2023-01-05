@@ -39,6 +39,27 @@ final class CacheRepository implements IFileCacheRepository
     /**
      * @inheritDoc
      */
+    public function resetCacheForUser(int $userOwnerId): void
+    {
+        $tag = $this->getUserTag($userOwnerId);
+        Cache::tags([$tag])->flush();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function resetCacheForFiles(array $fileIds): void
+    {
+        foreach ($fileIds as $fileId) {
+            $tag = $this->getFileTag($fileId);
+
+            Cache::tags([$tag])->flush();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getUserFiles(int $userOwnerId): Collection
     {
         $keyName = $this->getUserFilesKey($userOwnerId);
@@ -62,14 +83,45 @@ final class CacheRepository implements IFileCacheRepository
     }
 
     /**
-     * Get tag for specific user
-     *
-     * @param int $userOwnerId
-     * @return string
+     * @inheritDoc
      */
-    private function getUserTag(int $userOwnerId): string
+    public function getFileForOwner(int $id, int $userOwnerId): ?FileDTO
     {
-        return 'users/' . $userOwnerId . '/files';
+        $files = $this->getUserFiles($userOwnerId);
+
+        foreach ($files as $file) {
+            /**
+             * @var FileDTO $file
+             */
+            if ($file->id === $id) {
+                return $file;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFile(int $fileId): ?FileDTO
+    {
+        $keyName = $this->getDirectoryKey() . '/files/' . $fileId;
+        $file = Cache::get($keyName);
+
+        if ($file) {
+            return $file;
+        } else {
+            $file = $this->databaseRepository->getFile($fileId);
+
+            if (!$file) {
+                return null;
+            }
+
+            Cache::put($keyName, $file);
+
+            return $file;
+        }
     }
 
     /**
@@ -79,6 +131,17 @@ final class CacheRepository implements IFileCacheRepository
      * @return string
      */
     private function getUserFilesKey(int $userOwnerId): string
+    {
+        return 'users/' . $userOwnerId . '/files';
+    }
+
+    /**
+     * Get tag for specific user
+     *
+     * @param int $userOwnerId
+     * @return string
+     */
+    private function getUserTag(int $userOwnerId): string
     {
         return 'users/' . $userOwnerId . '/files';
     }
@@ -111,46 +174,6 @@ final class CacheRepository implements IFileCacheRepository
      */
     private function getFileTag(int $fileId): string
     {
-        return 'files/' . $fileId;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function resetCacheForUser(int $userOwnerId): void
-    {
-        $tag = $this->getUserTag($userOwnerId);
-        Cache::tags([$tag])->flush();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFile(int $id, int $userOwnerId): ?FileDTO
-    {
-        $files = $this->getUserFiles($userOwnerId);
-
-        foreach ($files as $file) {
-            /**
-             * @var FileDTO $file
-             */
-            if ($file->id === $id) {
-                return $file;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function resetCacheForFiles(array $fileIds): void
-    {
-        foreach ($fileIds as $fileId) {
-            $tag = $this->getFileTag($fileId);
-
-            Cache::tags([$tag])->flush();
-        }
+        return 'tag(files/' . $fileId . ')';
     }
 }

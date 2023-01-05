@@ -332,6 +332,23 @@ paths:
         301:
           description: Redirect to login or error page
 
+  /v1/files/{linkCode}:
+    get:
+      tags:
+        - file
+      summary: Download file
+      description: Download file by link code
+      produces:
+        - application/octet-stream
+      parameters:
+        - in: path
+          name: linkCode
+          required: true
+          type: string
+      responses:
+        301:
+          description: Redirect to page if file doesn't exist or link expired
+
   /v1/handbooks:
     get:
       tags:

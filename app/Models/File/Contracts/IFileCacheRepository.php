@@ -20,13 +20,13 @@ interface IFileCacheRepository extends IFileRepository, ICacheRepository
     public function resetCacheForUser(int $userOwnerId): void;
 
     /**
-     * Get file instance by id
+     * Get file instance by id for specific owner
      *
      * @param int $id
      * @param int $userOwnerId
      * @return FileDTO|null
      */
-    public function getFile(int $id, int $userOwnerId): ?FileDTO;
+    public function getFileForOwner(int $id, int $userOwnerId): ?FileDTO;
 
     /**
      * Reset cache for files by ids

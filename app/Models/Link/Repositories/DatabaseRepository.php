@@ -68,4 +68,47 @@ final class DatabaseRepository implements ILinkDatabaseRepository
 
         return $fileIds;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLinkByCode(string $code): ?LinkDTO
+    {
+        /**
+         * @var Model $model
+         */
+        $model = Model::query()
+            ->where('code', $code)
+            ->first();
+
+        if (!$model) {
+            return null;
+        }
+
+        /**
+         * @var LinkDTO $dto
+         */
+        $dto = $this->composer->getFromModel($model);
+
+        return $dto;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function incrementOpensCount(LinkDTO $dto): void
+    {
+        /**
+         * @var Model|null $model
+         */
+        $model = Model::query()
+            ->where('id', $dto->id)
+            ->first();
+
+        if ($model) {
+            $model->update([
+                'opens_count' => $model->opens_count + 1
+            ]);
+        }
+    }
 }

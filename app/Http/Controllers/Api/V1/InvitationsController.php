@@ -55,24 +55,4 @@ final class InvitationsController extends BaseController
     {
         return config('app.frontend_url') . '/login';
     }
-
-    /**
-     * Get URL for redirect to page with error "Forbidden"
-     *
-     * @return string
-     */
-    private function getRedirectToForbiddenLink(): string
-    {
-        return config('app.frontend_url') . '/forbidden';
-    }
-
-    /**
-     * Get URL for redirect to page with error "Not found"
-     *
-     * @return string
-     */
-    private function getRedirectToNotFoundLink(): string
-    {
-        return config('app.frontend_url') . '/not-found';
-    }
 }

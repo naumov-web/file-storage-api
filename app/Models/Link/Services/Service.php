@@ -7,6 +7,8 @@ use App\Models\Link\Contracts\ILinkDatabaseRepository;
 use App\Models\Link\Contracts\ILinkService;
 use App\Models\Link\DTO\LinkDTO;
 use App\Models\Link\Enums\TypesEnum;
+use App\Models\Link\Exceptions\LinkDoesntExistException;
+use App\Models\Link\Exceptions\LinkExpiredException;
 use App\Models\Link\Exceptions\PermanentLinkAlreadyExistsException;
 use Illuminate\Support\Str;
 
@@ -68,6 +70,40 @@ final class Service implements ILinkService
      */
     public function removeExpiredTemporaryLinks(): array
     {
-        return $this->databaseRepository->removeExpiredTemporaryLinks();
+        $fileIds = $this->databaseRepository->removeExpiredTemporaryLinks();
+        $this->cacheRepository->resetCacheForFiles($fileIds);
+
+        return $fileIds;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLinkByCode(string $code): LinkDTO
+    {
+        $linkDto = $this->cacheRepository->getLinkByCode($code);
+
+        if (!$linkDto) {
+            throw new LinkDoesntExistException();
+        }
+
+        $now = time();
+
+        if (
+            $linkDto->typeId === TypesEnum::TEMPORARY &&
+            strtotime($linkDto->expiredAt) < $now
+        ) {
+            throw new LinkExpiredException();
+        }
+
+        return $linkDto;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function incrementOpensCount(LinkDTO $dto): void
+    {
+        $this->databaseRepository->incrementOpensCount($dto);
     }
 }

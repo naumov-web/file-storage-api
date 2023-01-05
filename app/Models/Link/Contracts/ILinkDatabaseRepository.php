@@ -24,4 +24,12 @@ interface ILinkDatabaseRepository extends ILinkRepository
      * @return array
      */
     public function removeExpiredTemporaryLinks(): array;
+
+    /**
+     * Increment opens count
+     *
+     * @param LinkDTO $dto
+     * @return void
+     */
+    public function incrementOpensCount(LinkDTO $dto): void;
 }

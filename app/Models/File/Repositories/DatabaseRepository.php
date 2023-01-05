@@ -64,4 +64,28 @@ final class DatabaseRepository implements IFileDatabaseRepository
             ->where('id', $dto->id)
             ->delete();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFile(int $fileId): ?FileDTO
+    {
+        /**
+         * @var Model|null $model
+         */
+        $model = Model::query()
+            ->where('id', $fileId)
+            ->first();
+
+        if (!$model) {
+            return null;
+        }
+
+        /**
+         * @var FileDTO $dto
+         */
+        $dto = $this->composer->getFromModel($model);
+
+        return $dto;
+    }
 }

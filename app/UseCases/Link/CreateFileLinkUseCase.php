@@ -54,7 +54,7 @@ final class CreateFileLinkUseCase extends BaseUseCase
      */
     public function execute(): void
     {
-        $fileDto = $this->fileCacheRepository->getFile(
+        $fileDto = $this->fileCacheRepository->getFileForOwner(
             $this->inputDto->fileId,
             $this->inputDto->userOwnerId
         );

@@ -74,7 +74,7 @@ final class Service implements IFileService
      */
     public function delete(int $id, int $userOwnerId): void
     {
-        $dto = $this->cacheRepository->getFile($id, $userOwnerId);
+        $dto = $this->cacheRepository->getFileForOwner($id, $userOwnerId);
 
         if (!$dto) {
             throw new FileForbiddenException();
@@ -83,5 +83,15 @@ final class Service implements IFileService
         $this->databaseRepository->delete($dto);
         $this->fileGateway->delete($dto->path);
         $this->cacheRepository->resetCacheForUser($userOwnerId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFileFullPath(int $fileId): string
+    {
+        $dto = $this->cacheRepository->getFile($fileId);
+
+        return $this->fileGateway->getFullPath($dto->path);
     }
 }

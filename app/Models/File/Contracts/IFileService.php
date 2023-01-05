@@ -44,4 +44,12 @@ interface IFileService
      * @return void
      */
     public function delete(int $id, int $userOwnerId): void;
+
+    /**
+     * Get file full path by id
+     *
+     * @param int $fileId
+     * @return string
+     */
+    public function getFileFullPath(int $fileId): string;
 }
