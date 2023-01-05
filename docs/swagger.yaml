@@ -126,6 +126,64 @@ paths:
             $ref: "#/definitions/ValidationFailedResponseModel"
 
   /v1/account/files:
+    get:
+      tags:
+        - file
+      summary: Get user files
+      description: Get files for current user
+      security:
+        - JWT: [ ]
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          type: string
+          name: X-Locale
+          enum:
+            - ru
+            - en
+        - in: header
+          name: Authorization
+          required: true
+          type: string
+        - in: "query"
+          name: "limit"
+          type: "integer"
+          description: "Limit of items in response"
+        - in: "query"
+          name: "offset"
+          type: "integer"
+          description: "Offset of items in response"
+        - in: "query"
+          name: "sortBy"
+          type: "string"
+          description: "Sort by column"
+          enum:
+            - id
+            - name
+            - mime
+            - size
+            - description
+        - in: "query"
+          name: "sortDirection"
+          type: "string"
+          description: "Sort direction"
+          enum:
+            - asc
+            - desc
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/GetUserFilesResponseModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: "#/definitions/UnauthorizedResponseModel"
+        422:
+          description: Validation failed
+          schema:
+            $ref: "#/definitions/ValidationFailedResponseModel"
     post:
       tags:
         - file
@@ -424,6 +482,22 @@ definitions:
       description:
         type: string
 
+  # Get files models
+
+  GetUserFilesResponseModel:
+    type: object
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: "#/definitions/FileResponseModel"
+      count:
+        type: integer
+
   # Create link model
 
   CreateLinkRequestModel:
@@ -568,3 +642,35 @@ definitions:
         type: integer
       name:
         type: string
+
+  FileResponseModel:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      mime:
+        type: string
+      size:
+        type: integer
+      description:
+        type: string
+      links:
+        type: array
+        items:
+          $ref: "#/definitions/RoleResponseModel"
+
+  LinkResponseModel:
+    type: object
+    properties:
+      id:
+        type: integer
+      type:
+        $ref: "#/definitions/DefaultHandbookItemResponseModel"
+      url:
+        type: string
+      expiredAt:
+        type: string
+      isEnabled:
+        type: boolean
