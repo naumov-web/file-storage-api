@@ -73,4 +73,10 @@ final class UseCaseSystemNamesEnum
      * @var string
      */
     public const CREATE_FILE_LINK = 'create_file_link';
+
+    /**
+     * Use case "Clear expired temporary links"
+     * @var string
+     */
+    public const CLEAR_EXPIRED_TEMPORARY_LINKS = 'clear_expired_temporary_links';
 }

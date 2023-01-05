@@ -27,4 +27,12 @@ interface IFileCacheRepository extends IFileRepository, ICacheRepository
      * @return FileDTO|null
      */
     public function getFile(int $id, int $userOwnerId): ?FileDTO;
+
+    /**
+     * Reset cache for files by ids
+     *
+     * @param array $fileIds
+     * @return void
+     */
+    public function resetCacheForFiles(array $fileIds): void;
 }

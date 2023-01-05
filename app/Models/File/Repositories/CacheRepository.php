@@ -48,8 +48,14 @@ final class CacheRepository implements IFileCacheRepository
             return $items;
         } else {
             $items = $this->databaseRepository->getUserFiles($userOwnerId);
-            Cache::tags([$this->getUserTag($userOwnerId)])
-                ->put($keyName, $items);
+            Cache::tags(
+                array_merge(
+                    [
+                        $this->getUserTag($userOwnerId)
+                    ],
+                    $this->getFileTags($items)
+                )
+            )->put($keyName, $items);
 
             return $items;
         }
@@ -78,6 +84,37 @@ final class CacheRepository implements IFileCacheRepository
     }
 
     /**
+     * Get file tags from file collection
+     *
+     * @param Collection $items
+     * @return array
+     */
+    private function getFileTags(Collection $items): array
+    {
+        $result = [];
+
+        foreach ($items as $item) {
+            /**
+             * @var FileDTO $item
+             */
+            $result[] = $this->getFileTag($item->id);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get file tag by file id
+     *
+     * @param int $fileId
+     * @return string
+     */
+    private function getFileTag(int $fileId): string
+    {
+        return 'files/' . $fileId;
+    }
+
+    /**
      * @inheritDoc
      */
     public function resetCacheForUser(int $userOwnerId): void
@@ -103,5 +140,17 @@ final class CacheRepository implements IFileCacheRepository
         }
 
         return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function resetCacheForFiles(array $fileIds): void
+    {
+        foreach ($fileIds as $fileId) {
+            $tag = $this->getFileTag($fileId);
+
+            Cache::tags([$tag])->flush();
+        }
     }
 }
