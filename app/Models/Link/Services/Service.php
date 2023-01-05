@@ -49,6 +49,8 @@ final class Service implements ILinkService
                     throw new PermanentLinkAlreadyExistsException();
                 }
             }
+
+            $dto->expiredAt = null;
         }
 
         $dto->code = Str::random(self::CODE_LENGTH);
