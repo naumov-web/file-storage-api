@@ -102,16 +102,15 @@ final class DatabaseRepository implements IFileDatabaseRepository
             ->with(['links']);
         $result->count = $query->count();
 
-        if ($dto->limit) {
+        if (isset($dto->limit) && isset($dto->offset)) {
             $query->limit($dto->limit);
-        }
-
-        if ($dto->offset) {
             $query->offset($dto->offset);
         }
 
         if ($dto->sortBy && $dto->sortDirection) {
             $query->orderBy($dto->sortBy, $dto->sortDirection);
+        } else {
+            $query->orderBy('id', 'asc');
         }
 
         $result->items = $this->composer->getFromCollection($query->get());
