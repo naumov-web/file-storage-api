@@ -4,10 +4,12 @@ namespace App\Models\File\Services;
 
 use App\Gateways\Contracts\IFileGatewayInterface;
 use App\Models\Common\DTO\FileSavingResultDTO;
+use App\Models\Common\DTO\ListDTO;
 use App\Models\File\Contracts\IFileCacheRepository;
 use App\Models\File\Contracts\IFileDatabaseRepository;
 use App\Models\File\Contracts\IFileService;
 use App\Models\File\DTO\FileDTO;
+use App\Models\File\DTO\GetUserFilesDTO;
 use App\Models\File\Exceptions\FileAlreadyExistsException;
 use App\Models\File\Exceptions\FileForbiddenException;
 
@@ -93,5 +95,13 @@ final class Service implements IFileService
         $dto = $this->cacheRepository->getFile($fileId);
 
         return $this->fileGateway->getFullPath($dto->path);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUserFileList(GetUserFilesDTO $dto): ListDTO
+    {
+        return $this->cacheRepository->getUserFilesList($dto);
     }
 }

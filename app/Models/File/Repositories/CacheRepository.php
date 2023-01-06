@@ -2,9 +2,11 @@
 
 namespace App\Models\File\Repositories;
 
+use App\Models\Common\DTO\ListDTO;
 use App\Models\File\Contracts\IFileCacheRepository;
 use App\Models\File\Contracts\IFileDatabaseRepository;
 use App\Models\File\DTO\FileDTO;
+use App\Models\File\DTO\GetUserFilesDTO;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -125,6 +127,26 @@ final class CacheRepository implements IFileCacheRepository
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getUserFilesList(GetUserFilesDTO $dto): ListDTO
+    {
+        $keyName = $this->getUserFilesListKey($dto);
+        $listDto = Cache::get($keyName);
+
+        if ($listDto) {
+            return $listDto;
+        } else {
+            $listDto = $this->databaseRepository->getUserFilesList($dto);
+            Cache::tags([
+                $this->getUserFilesKey($dto->userOwnerId)
+            ])->put($keyName, $listDto);
+
+            return $listDto;
+        }
+    }
+
+    /**
      * Get user files key
      *
      * @param int $userOwnerId
@@ -133,6 +155,31 @@ final class CacheRepository implements IFileCacheRepository
     private function getUserFilesKey(int $userOwnerId): string
     {
         return 'users/' . $userOwnerId . '/files';
+    }
+
+    /**
+     * Get cache key name for user files list
+     *
+     * @param GetUserFilesDTO $dto
+     * @return string
+     */
+    private function getUserFilesListKey(GetUserFilesDTO $dto): string
+    {
+        $result = 'users/' . $dto->userOwnerId . '/files';
+
+        if (isset($dto->limit)) {
+            $result .= ('/limit/' . $dto->limit);
+        }
+
+        if (isset($dto->offset)) {
+            $result .= ('/offset/' . $dto->offset);
+        }
+
+        if ($dto->sortBy && $dto->sortDirection) {
+            $result .= ('/order/' . $dto->sortBy . '/' . $dto->sortDirection);
+        }
+
+        return $result;
     }
 
     /**

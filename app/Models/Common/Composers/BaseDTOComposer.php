@@ -29,16 +29,9 @@ abstract class BaseDTOComposer
     public function getFromCollection(Collection $items): Collection
     {
         $result = [];
-        $className = $this->getDTOClass();
 
         foreach ($items as $item) {
-            /**
-             * @var ModelDTO $resultItem
-             */
-            $resultItem = new $className();
-            $resultItem->fillFromModel($item);
-
-            $result[] = $resultItem;
+            $result[] = $this->getFromModel($item);
         }
 
         return collect($result);
