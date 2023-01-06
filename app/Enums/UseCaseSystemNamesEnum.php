@@ -57,6 +57,12 @@ final class UseCaseSystemNamesEnum
     public const CREATE_USER_FILE = 'create_user_file';
 
     /**
+     * Use case "Get user files"
+     * @var string
+     */
+    public const GET_USER_FILES = 'get_user_files';
+
+    /**
      * Use case "Delete user file"
      * @var string
      */

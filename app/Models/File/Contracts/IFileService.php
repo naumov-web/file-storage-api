@@ -3,7 +3,9 @@
 namespace App\Models\File\Contracts;
 
 use App\Models\Common\DTO\FileSavingResultDTO;
+use App\Models\Common\DTO\ListDTO;
 use App\Models\File\DTO\FileDTO;
+use App\Models\File\DTO\GetUserFilesDTO;
 
 /**
  * Interface IFileService
@@ -52,4 +54,12 @@ interface IFileService
      * @return string
      */
     public function getFileFullPath(int $fileId): string;
+
+    /**
+     * Get user files list
+     *
+     * @param GetUserFilesDTO $dto
+     * @return ListDTO
+     */
+    public function getUserFileList(GetUserFilesDTO $dto): ListDTO;
 }

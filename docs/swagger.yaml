@@ -659,7 +659,7 @@ definitions:
       links:
         type: array
         items:
-          $ref: "#/definitions/RoleResponseModel"
+          $ref: "#/definitions/LinkResponseModel"
 
   LinkResponseModel:
     type: object

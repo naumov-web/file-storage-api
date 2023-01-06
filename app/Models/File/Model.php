@@ -3,6 +3,8 @@
 namespace App\Models\File;
 
 use App\Models\BaseDBModel;
+use App\Models\Link;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Model
@@ -24,4 +26,17 @@ final class Model extends BaseDBModel
      * @var string
      */
     protected $table = 'files';
+
+    /**
+     * Get links relation
+     *
+     * @return HasMany
+     */
+    public function links(): HasMany
+    {
+        return $this->hasMany(
+            Link\Model::class,
+            'file_id'
+        );
+    }
 }

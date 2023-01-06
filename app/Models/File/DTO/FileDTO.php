@@ -3,6 +3,8 @@
 namespace App\Models\File\DTO;
 
 use App\Models\Common\DTO\ModelDTO;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Class FileDTO
@@ -10,6 +12,14 @@ use App\Models\Common\DTO\ModelDTO;
  */
 final class FileDTO extends ModelDTO
 {
+    /**
+     * Except auto fields list
+     * @var array
+     */
+    protected array $exceptAutoFields = [
+        'links'
+    ];
+
     /**
      * File id value
      * @var int
@@ -56,5 +66,11 @@ final class FileDTO extends ModelDTO
      * File description value
      * @var string|null
      */
-    public string|null $description;
+    public string|null $description = null;
+
+    /**
+     * Links list
+     * @var array
+     */
+    public array $links;
 }

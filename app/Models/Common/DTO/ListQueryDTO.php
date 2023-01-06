@@ -6,7 +6,7 @@ namespace App\Models\Common\DTO;
  * Class ListQueryDTO
  * @package App\Models\Common\DTO
  */
-final class ListQueryDTO
+abstract class ListQueryDTO
 {
     /**
      * Limit value

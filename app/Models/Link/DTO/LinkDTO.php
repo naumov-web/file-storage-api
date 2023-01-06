@@ -38,7 +38,7 @@ final class LinkDTO extends ModelDTO
      * Link expired at value
      * @var string|null
      */
-    public string|null $expiredAt;
+    public string|null $expiredAt = null;
 
     /**
      * Link is enabled flag value
@@ -51,6 +51,22 @@ final class LinkDTO extends ModelDTO
      * @var int
      */
     public int $opensCount;
+
+    /**
+     * Get link type
+     *
+     * @return array|null
+     */
+    public function getType(): ?array
+    {
+        foreach (config('handbooks.linkTypes') as $linkType) {
+            if ($linkType['id'] === $this->typeId) {
+                return $linkType;
+            }
+        }
+
+        return null;
+    }
 
     /**
      * Get URL for downloading file
